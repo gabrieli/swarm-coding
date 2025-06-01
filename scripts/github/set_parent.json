@@ -1,0 +1,9 @@
+{
+  "query": "mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $value: String!) { updateProjectV2ItemFieldValue(input: { projectId: $projectId, itemId: $itemId, fieldId: $fieldId, value: {text: $value} }) { projectV2Item { id } } }",
+  "variables": {
+    "projectId": "PVT_kwHOACofRM4A5PeM",
+    "itemId": "PVTI_lAHOACofRM4A5PeMzgagA0E",
+    "fieldId": "PVTF_lAHOACofRM4A5PeMzguEr8o",
+    "value": "#1"
+  }
+}

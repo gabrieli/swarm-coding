@@ -1,4 +1,4 @@
-# GitHub Quick Reference for Pulse Project
+# GitHub Quick Reference for Your Project
 
 ## Common Commands
 
@@ -10,32 +10,32 @@
 # Option 2: Manual steps
 ISSUE_URL=$(gh issue create --title "Title" --body "Body" --assignee @me)
 ISSUE_NUMBER=$(echo $ISSUE_URL | grep -o '[0-9]*$')
-gh issue edit $ISSUE_NUMBER --add-project "Pulse Menu"
+gh issue edit $ISSUE_NUMBER --add-project "YOUR_PROJECT_NAME"
 # Then update status (see full guide)
 ```
 
 ### Update Issue Status
 ```bash
 # Get item ID
-ITEM_ID=$(gh project item-list 1 --owner gabrieli --format json | jq -r '.items[] | select(.content.number==14) | .id')
+ITEM_ID=$(gh project item-list 1 --owner YOUR_GITHUB_USERNAME --format json | jq -r '.items[] | select(.content.number==14) | .id')
 
 # Update to Dev Ready
 gh api graphql -F query=@update_status.graphql \
-  -f projectId="PVT_kwHOACofRM4A5PeM" \
+  -f projectId="YOUR_PROJECT_ID" \
   -f itemId="$ITEM_ID" \
-  -f fieldId="PVTSSF_lAHOACofRM4A5PeMzguEr8I" \
-  -f optionId="61e4505c"
+  -f fieldId="YOUR_STATUS_FIELD_ID" \
+  -f optionId="YOUR_STATUS_OPTION_ID"
 ```
 
 ### View Project Items
 ```bash
-gh project item-list 1 --owner gabrieli --format json | jq '.items[] | {number: .content.number, title: .content.title, status: .fieldValues.Status}'
+gh project item-list 1 --owner YOUR_GITHUB_USERNAME --format json | jq '.items[] | {number: .content.number, title: .content.title, status: .fieldValues.Status}'
 ```
 
 ## Project Constants
-- **Project ID**: PVT_kwHOACofRM4A5PeM
-- **Status Field ID**: PVTSSF_lAHOACofRM4A5PeMzguEr8I
-- **Dev Ready Option**: 61e4505c
+- **Project ID**: YOUR_PROJECT_ID
+- **Status Field ID**: YOUR_STATUS_FIELD_ID
+- **Dev Ready Option**: YOUR_DEV_READY_STATUS_ID
 
 ## GraphQL Templates
 
@@ -88,7 +88,7 @@ query($project: ID!) {
 - Don't use inline multi-line strings
 
 ### "Invalid number" Error
-- Use project number (1) not name ("Pulse Menu")
+- Use project number (1) not name ("Your Project Name")
 - Include --owner flag
 
 ### Special Characters in Body

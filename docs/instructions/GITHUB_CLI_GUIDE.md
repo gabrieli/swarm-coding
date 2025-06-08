@@ -1,4 +1,4 @@
-# GitHub CLI Guide for Pulse Project
+# GitHub CLI Guide for Your Project
 
 This guide provides examples and documentation for common GitHub operations to avoid errors.
 
@@ -29,7 +29,7 @@ gh issue edit <number> --add-project "Project Name"
 ```bash
 gh project list --owner <username>
 # Output: NUMBER  TITLE       STATE   ID
-# Example: 1       Pulse Menu  open    PVT_kwHOACofRM4A5PeM
+# Example: 1       Your Project  open    YOUR_PROJECT_ID
 ```
 
 ### 5. Get Project Field Information
@@ -93,23 +93,23 @@ gh api graphql -F query=@update_status.graphql \
   -f optionId="OPTION_ID"
 ```
 
-## Pulse Project Specific IDs
+## Your Project Specific IDs
 
 ### Project Information
-- **Project Name**: Pulse Menu
+- **Project Name**: YOUR_PROJECT_NAME
 - **Project Number**: 1
-- **Project ID**: PVT_kwHOACofRM4A5PeM
-- **Owner**: gabrieli
+- **Project ID**: YOUR_PROJECT_ID
+- **Owner**: YOUR_GITHUB_USERNAME
 
 ### Status Field
-- **Field ID**: PVTSSF_lAHOACofRM4A5PeMzguEr8I
+- **Field ID**: YOUR_STATUS_FIELD_ID
 - **Status Options**:
-  - Backlog: `f75ad846`
-  - PM Refined: `4bbaa247`
-  - Dev Ready: `61e4505c`
-  - In progress: `47fc9ee4`
-  - In review: `df73e18b`
-  - Done: `98236657`
+  - Backlog: `YOUR_BACKLOG_STATUS_ID`
+  - PM Refined: `YOUR_PM_REFINED_STATUS_ID`
+  - Dev Ready: `YOUR_DEV_READY_STATUS_ID`
+  - In progress: `YOUR_IN_PROGRESS_STATUS_ID`
+  - In review: `YOUR_IN_REVIEW_STATUS_ID`
+  - Done: `YOUR_DONE_STATUS_ID`
 
 ## Common Workflow: Create Issue and Set to Dev Ready
 
@@ -118,22 +118,22 @@ gh api graphql -F query=@update_status.graphql \
 ISSUE_URL=$(gh issue create --title "Title" --body "Body" --assignee @me)
 ISSUE_NUMBER=$(echo $ISSUE_URL | grep -o '[0-9]*$')
 
-# 2. Add to Pulse Menu project
-gh issue edit $ISSUE_NUMBER --add-project "Pulse Menu"
+# 2. Add to Your Project
+gh issue edit $ISSUE_NUMBER --add-project "YOUR_PROJECT_NAME"
 
 # 3. Get the project item ID
-ITEM_ID=$(gh project item-list 1 --owner gabrieli --format json | jq -r '.items[] | select(.content.number=='$ISSUE_NUMBER') | .id')
+ITEM_ID=$(gh project item-list 1 --owner YOUR_GITHUB_USERNAME --format json | jq -r '.items[] | select(.content.number=='$ISSUE_NUMBER') | .id')
 
 # 4. Update status to Dev Ready
 cat > update_to_dev_ready.graphql << 'EOF'
 mutation {
   updateProjectV2ItemFieldValue(
     input: {
-      projectId: "PVT_kwHOACofRM4A5PeM"
+      projectId: "YOUR_PROJECT_ID"
       itemId: "REPLACE_ITEM_ID"
-      fieldId: "PVTSSF_lAHOACofRM4A5PeMzguEr8I"
+      fieldId: "YOUR_STATUS_FIELD_ID"
       value: {
-        singleSelectOptionId: "61e4505c"
+        singleSelectOptionId: "YOUR_DEV_READY_STATUS_ID"
       }
     }
   ) {
@@ -177,7 +177,7 @@ Add these to your shell profile:
 alias gh-create-dev-ready='function _create() {
   ISSUE_URL=$(gh issue create --title "$1" --body "$2" --assignee @me)
   ISSUE_NUMBER=$(echo $ISSUE_URL | grep -o "[0-9]*$")
-  gh issue edit $ISSUE_NUMBER --add-project "Pulse Menu"
+  gh issue edit $ISSUE_NUMBER --add-project "YOUR_PROJECT_NAME"
   # ... (add status update logic)
 }; _create'
 ```

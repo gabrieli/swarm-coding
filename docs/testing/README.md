@@ -1,10 +1,10 @@
-# Pulse Testing Documentation
+# Project Testing Documentation
 
-Welcome to the Pulse testing documentation. This guide provides comprehensive information about testing practices, conventions, and guidelines for the Pulse multi-platform project.
+Welcome to the project testing documentation. This guide provides comprehensive information about testing practices, conventions, and guidelines for your multi-platform project.
 
 ## Overview
 
-The Pulse project uses a multi-platform architecture with Kotlin Multiplatform Mobile (KMM) for shared code and platform-specific implementations for iOS and Android. Our testing strategy reflects this architecture with:
+Your project uses a multi-platform architecture with Kotlin Multiplatform Mobile (KMM) for shared code and platform-specific implementations for iOS and Android. Our testing strategy reflects this architecture with:
 
 - **Shared Tests**: Common business logic tests that run on all platforms
 - **Platform-Specific Tests**: iOS and Android specific implementations
@@ -59,7 +59,7 @@ xcodebuild test -workspace iosApp.xcworkspace -scheme iosApp -destination 'platf
 
 ### Directory Structure
 ```
-pulse/
+your-project/
 ├── shared/
 │   ├── src/
 │   │   ├── commonTest/        # Shared test code

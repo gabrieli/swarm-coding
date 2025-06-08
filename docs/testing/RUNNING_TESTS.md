@@ -1,6 +1,6 @@
 # Running Tests Guide
 
-This guide provides comprehensive instructions for executing tests in the Pulse project across all platforms and environments.
+This guide provides comprehensive instructions for executing tests in your project across all platforms and environments.
 
 ## Quick Command Reference
 
@@ -85,7 +85,7 @@ cd iosApp && xcodebuild test -workspace iosApp.xcworkspace -scheme iosApp -desti
 ./gradlew :androidApp:connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.device=emulator-5554
 
 # Run specific UI test class
-./gradlew :androidApp:connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.pulse.MenuScreenTest
+./gradlew :androidApp:connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.YOUR_PROJECT_NAME.YourScreenTest
 ```
 
 #### Running Tests from Android Studio
@@ -189,7 +189,7 @@ export SUPABASE_ANON_KEY=your-local-anon-key
 ./gradlew test --exclude "*Slow*"
 
 # Run tests by package
-./gradlew test --tests "com.example.pulse.services.*"
+./gradlew test --tests "com.example.YOUR_PROJECT_NAME.services.*"
 
 # Combine filters
 ./gradlew test --tests "*Menu*" --exclude "*Integration*"

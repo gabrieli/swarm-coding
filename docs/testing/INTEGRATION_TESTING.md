@@ -1,6 +1,6 @@
 # Integration Testing Guide
 
-This guide covers integration testing practices for the Pulse project, focusing on testing interactions with external services like Supabase, AI services, and network APIs.
+This guide covers integration testing practices for your project, focusing on testing interactions with external services like backend APIs, AI services, and network APIs.
 
 ## Overview
 

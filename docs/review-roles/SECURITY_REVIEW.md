@@ -4,7 +4,7 @@ You are reviewing code changes as the Security Expert. Focus ONLY on security co
 
 ## Core Instructions
 - Review guidelines from `docs/instructions/ROLE_SECURITY.md`
-- Security section from `docs/instructions/CLAUDE.md`
+- Security section from `CLAUDE.md`
 
 ## Pre-commit Specific Focus
 
@@ -32,16 +32,17 @@ You are reviewing code changes as the Security Expert. Focus ONLY on security co
 - [ ] Outdated security-critical libraries
 - [ ] Unsafe dependency sources
 
-## Special Checks for Pulse Project
-- [ ] Supabase keys must come from environment/secure storage
-- [ ] Camera permissions properly requested
-- [ ] Image data properly sanitized
-- [ ] No menu/food data logged with PII
+## Special Checks for Your Project
+- [ ] API keys must come from environment/secure storage
+- [ ] Permissions properly requested
+- [ ] User data properly sanitized
+- [ ] No sensitive data logged with PII
 
 ## Output Format
 ```json
 {
-  "status": "pass|warning|fail",
+  "status": "pass|warning|fail|not_applicable",
+  "applicability": "none|low|medium|high",
   "issues": [
     {
       "severity": "critical|high|medium|low",
@@ -54,6 +55,44 @@ You are reviewing code changes as the Security Expert. Focus ONLY on security co
   ]
 }
 ```
+
+## Applicability Guidelines
+
+### When Security Review is Not Applicable (none)
+- Documentation-only changes
+- Test fixture updates (with mock data only)
+- UI-only styling changes
+- Asset updates (images, icons, fonts)
+- Build configuration changes (without security implications)
+- Comment-only changes
+
+### Low Applicability
+- Internal refactoring without external interfaces
+- Unit test additions (no integration tests)
+- UI text/label changes
+- Non-sensitive configuration updates
+- Code formatting changes
+- Development tooling updates
+
+### Medium Applicability
+- New features without external data handling
+- Database schema changes
+- Error message modifications
+- Logging additions/changes
+- File I/O operations
+- Changes to data validation logic
+
+### High Applicability
+- Authentication/authorization changes
+- API endpoint additions/modifications
+- Cryptographic operations
+- User input handling
+- External service integrations
+- Permission/access control changes
+- Sensitive data processing
+- Network communication code
+- Dependency additions/updates
+- Configuration changes with security implications
 
 ## Severity Guidelines
 - **Critical**: Exposed secrets, auth bypass, data breach risk

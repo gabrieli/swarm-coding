@@ -1,6 +1,6 @@
 # UI Testing Guide
 
-This guide covers UI testing practices for iOS and Android in the Pulse project. UI tests verify the application's user interface behaves correctly from the user's perspective.
+This guide covers UI testing practices for iOS and Android in your project. UI tests verify the application's user interface behaves correctly from the user's perspective.
 
 ## Overview
 
@@ -348,7 +348,7 @@ func testAsyncDataLoading() {
 fun testCompleteMenuSelectionFlow() {
     // Start at menu selection
     composeTestRule.setContent {
-        PulseApp()
+        YourApp()
     }
     
     // Select camera option
@@ -406,7 +406,7 @@ func testCompleteMenuSelectionFlow() {
 ./gradlew :androidApp:connectedDebugAndroidTest --tests="*.CameraScreenTest"
 
 # Run on specific device
-./gradlew :androidApp:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.pulse.CameraScreenTest
+./gradlew :androidApp:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.YOUR_PROJECT_NAME.YourScreenTest
 ```
 
 ### iOS
@@ -427,7 +427,7 @@ xcodebuild test -workspace iosApp.xcworkspace -scheme iosApp -destination 'platf
 ### Test Structure
 ```
 androidApp/src/androidTest/
-├── java/com/example/techfulness/pulse/android/
+├── java/com/example/YOUR_ORGANIZATION/YOUR_PROJECT_NAME/android/
 │   ├── ui/                    # UI test files
 │   │   ├── CameraScreenTest.kt
 │   │   ├── FoodMenuScreenTest.kt

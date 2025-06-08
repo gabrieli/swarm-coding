@@ -1,5 +1,5 @@
 #!/bin/bash
-# Installation script for Pulse PR Workflow
+# Installation script for Project PR Workflow
 
 set -e
 
@@ -11,7 +11,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 NC='\033[0m'
 
-echo "🚀 Installing Pulse PR Workflow..."
+echo "🚀 Installing Project PR Workflow..."
 echo ""
 
 # 1. Create git alias for post-push hook
@@ -42,20 +42,20 @@ fi
 
 if [[ -n "$SHELL_RC" ]]; then
     # Check if already configured
-    if ! grep -q "PULSE_PR_WORKFLOW" "$SHELL_RC"; then
+    if ! grep -q "PROJECT_PR_WORKFLOW" "$SHELL_RC"; then
         cat >> "$SHELL_RC" <<EOF
 
-# Pulse PR Workflow Configuration
-export PULSE_PR_ASYNC=true              # Run post-push validation asynchronously
-export PULSE_PR_NOTIFY=desktop          # Notification method: desktop, terminal, none
-export PULSE_PR_VALIDATION_MODE=full    # Default validation mode: full, incremental, quick
+# Project PR Workflow Configuration
+export PROJECT_PR_ASYNC=true              # Run post-push validation asynchronously
+export PROJECT_PR_NOTIFY=desktop          # Notification method: desktop, terminal, none
+export PROJECT_PR_VALIDATION_MODE=full    # Default validation mode: full, incremental, quick
 EOF
         echo -e "${GREEN}✓${NC} Added configuration to $SHELL_RC"
     fi
 fi
 
 # 4. Create cache directory
-mkdir -p "$HOME/.pulse-pr-cache"
+mkdir -p "$HOME/.project-pr-cache"
 
 # 5. Display instructions
 echo ""
@@ -75,10 +75,10 @@ echo "3. Push with automatic validation:"
 echo "   ${YELLOW}git push-validate${NC}           # Push and validate if PR exists"
 echo ""
 echo "4. Configure validation behavior:"
-echo "   Edit ~/.pulse-pr-cache/config.yml or set environment variables:"
-echo "   - PULSE_PR_ASYNC (true/false)"
-echo "   - PULSE_PR_NOTIFY (desktop/terminal/none)"
-echo "   - PULSE_PR_VALIDATION_MODE (full/incremental/quick)"
+echo "   Edit ~/.project-pr-cache/config.yml or set environment variables:"
+echo "   - PROJECT_PR_ASYNC (true/false)"
+echo "   - PROJECT_PR_NOTIFY (desktop/terminal/none)"
+echo "   - PROJECT_PR_VALIDATION_MODE (full/incremental/quick)"
 echo ""
 echo "⚠️  Important: Always use 'pr-swarm' or 'git pr-create' to create PRs!"
 echo ""

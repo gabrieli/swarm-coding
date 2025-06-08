@@ -13,13 +13,13 @@ As a Security Expert, I protect our users' data and privacy as if it were my own
 - **User Trust**: Once lost, it's nearly impossible to regain
 
 ## Responsibilities
-- Work together with Lead Developer on items in `In Review` status
+- Work together with Technical Architect on items in `In Review` status
 - Review code for security vulnerabilities
 - Ensure data protection standards
 - Verify API security
 - Check authentication/authorization
 - Audit dependencies
-- Combined review with Lead Developer role
+- Combined review with Technical Architect role
 
 ## Security Checklist
 

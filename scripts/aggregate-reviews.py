@@ -3,6 +3,28 @@
 import json
 import sys
 import os
+from pathlib import Path
+
+def find_config_file():
+    """Find the config.json file by walking up the directory tree"""
+    current = Path(__file__).resolve().parent
+    while current != current.parent:
+        config_path = current / "config.json"
+        if config_path.exists():
+            return config_path
+        current = current.parent
+    return None
+
+def load_config():
+    """Load configuration from config.json"""
+    config_path = find_config_file()
+    if config_path:
+        try:
+            with open(config_path, 'r') as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"Warning: Failed to load config.json: {e}")
+    return {}
 
 def load_review(filepath):
     """Load a review JSON file, return empty dict if failed"""
@@ -36,7 +58,7 @@ def load_review(filepath):
         print(f"Warning: Failed to load {filepath}: {e}")
         return {"status": "error", "issues": []}
 
-def aggregate_reviews(architect_path, security_path, testing_path):
+def aggregate_reviews(architect_path, security_path, testing_path, documentation_path=None, devops_path=None, ux_path=None):
     """Aggregate all review results and determine overall status"""
     
     reviews = {
@@ -44,6 +66,14 @@ def aggregate_reviews(architect_path, security_path, testing_path):
         "security": load_review(security_path),
         "testing": load_review(testing_path)
     }
+    
+    # Add optional review roles if provided
+    if documentation_path and os.path.exists(documentation_path):
+        reviews["documentation"] = load_review(documentation_path)
+    if devops_path and os.path.exists(devops_path):
+        reviews["devops"] = load_review(devops_path)
+    if ux_path and os.path.exists(ux_path):
+        reviews["ux"] = load_review(ux_path)
     
     # Determine overall status
     has_critical = False
@@ -102,8 +132,19 @@ def aggregate_reviews(architect_path, security_path, testing_path):
         return 0
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        print("Usage: aggregate-reviews.py <architect.json> <security.json> <testing.json>")
+    if len(sys.argv) < 4:
+        print("Usage: aggregate-reviews.py <architect.json> <security.json> <testing.json> [documentation.json] [devops.json] [ux.json]")
         sys.exit(1)
     
-    sys.exit(aggregate_reviews(sys.argv[1], sys.argv[2], sys.argv[3]))
+    # Required parameters
+    architect_path = sys.argv[1]
+    security_path = sys.argv[2]
+    testing_path = sys.argv[3]
+    
+    # Optional parameters
+    documentation_path = sys.argv[4] if len(sys.argv) > 4 else None
+    devops_path = sys.argv[5] if len(sys.argv) > 5 else None
+    ux_path = sys.argv[6] if len(sys.argv) > 6 else None
+    
+    sys.exit(aggregate_reviews(architect_path, security_path, testing_path, 
+                              documentation_path, devops_path, ux_path))

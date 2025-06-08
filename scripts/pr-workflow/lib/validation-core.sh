@@ -4,10 +4,14 @@
 
 set -e
 
-# Configuration
+# Load configuration
+REQUIRE_PR_CONFIG=true
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
-CACHE_DIR="${HOME}/.pulse-pr-cache"
+source "$SCRIPT_DIR/../../lib/config-loader.sh"
+
+# Use configured values or defaults
+PROJECT_ROOT="${SWARM_PROJECT_ROOT}"
+CACHE_DIR="${CACHE_DIR:-$HOME/.swarm-pr-cache}"
 VALIDATION_TIMEOUT="${VALIDATION_TIMEOUT:-300}"  # 5 minutes default
 
 # Colors for output
@@ -227,64 +231,76 @@ run_ai_reviews_for_pr() {
     # Run reviews in parallel
     log_info "Running AI reviews in parallel..."
     
-    # Architecture review
-    (
-        if [[ -f "$PROJECT_ROOT/docs/ai-review/ARCHITECT_REVIEW.md" ]]; then
-            local prompt="You are an AI code reviewer acting as the Technical Architect. Your role is defined in the following instructions:
+    # Array to store PIDs
+    local review_pids=()
+    
+    # Function to run a single review
+    run_single_review() {
+        local review_type="$1"
+        local role_name="$2"
+        local review_file="$3"
+        
+        if [[ -f "$review_file" ]]; then
+            local prompt="You are an AI code reviewer acting as the $role_name. Your role is defined in the following instructions:
 
-$(cat "$PROJECT_ROOT/docs/ai-review/ARCHITECT_REVIEW.md")
+$(cat "$review_file")
 
 Here are the files to review from the current PR:
 $files_content
 
 Please analyze these files and provide your review in the JSON format specified in the instructions."
             
-            $claude_cmd --model opus -p --output-format json "$prompt" > "$temp_dir/architect.json" 2>"$temp_dir/architect.err"
+            $claude_cmd --model opus -p --output-format json "$prompt" > "$temp_dir/$review_type.json" 2>"$temp_dir/$review_type.err"
         fi
-    ) &
-    local arch_pid=$!
+    }
+    
+    # Run all reviews
+    # Check for ai-review directory first, then fall back to review-roles
+    local review_dir="$PROJECT_ROOT/docs/ai-review"
+    if [[ ! -d "$review_dir" ]]; then
+        review_dir="$PROJECT_ROOT/docs/review-roles"
+    fi
+    
+    # Architecture review
+    ( run_single_review "architect" "Technical Architect" "$review_dir/ARCHITECT_REVIEW.md" ) &
+    review_pids+=($!)
     
     # Security review
-    (
-        if [[ -f "$PROJECT_ROOT/docs/ai-review/SECURITY_REVIEW.md" ]]; then
-            local prompt="You are an AI code reviewer acting as the Security Expert. Your role is defined in the following instructions:
-
-$(cat "$PROJECT_ROOT/docs/ai-review/SECURITY_REVIEW.md")
-
-Here are the files to review from the current PR:
-$files_content
-
-Please analyze these files and provide your review in the JSON format specified in the instructions."
-            
-            $claude_cmd --model opus -p --output-format json "$prompt" > "$temp_dir/security.json" 2>"$temp_dir/security.err"
-        fi
-    ) &
-    local sec_pid=$!
+    ( run_single_review "security" "Security Expert" "$review_dir/SECURITY_REVIEW.md" ) &
+    review_pids+=($!)
     
     # Testing review
-    (
-        if [[ -f "$PROJECT_ROOT/docs/ai-review/TESTING_REVIEW.md" ]]; then
-            local prompt="You are an AI code reviewer acting as the QA Test Expert. Your role is defined in the following instructions:
-
-$(cat "$PROJECT_ROOT/docs/ai-review/TESTING_REVIEW.md")
-
-Here are the files to review from the current PR:
-$files_content
-
-Please analyze these files and provide your review in the JSON format specified in the instructions."
-            
-            $claude_cmd --model opus -p --output-format json "$prompt" > "$temp_dir/testing.json" 2>"$temp_dir/testing.err"
-        fi
-    ) &
-    local test_pid=$!
+    ( run_single_review "testing" "QA Test Expert" "$review_dir/TESTING_REVIEW.md" ) &
+    review_pids+=($!)
+    
+    # Documentation review
+    ( run_single_review "documentation" "Documentation Reviewer" "$review_dir/DOCUMENTATION_REVIEW.md" ) &
+    review_pids+=($!)
+    
+    # DevOps review
+    ( run_single_review "devops" "DevOps Engineer" "$review_dir/DEVOPS_REVIEW.md" ) &
+    review_pids+=($!)
+    
+    # UX review
+    ( run_single_review "ux" "UX Designer" "$review_dir/UX_REVIEW.md" ) &
+    review_pids+=($!)
     
     # Wait for reviews with timeout
     local timeout=240  # 4 minutes
     local elapsed=0
     while [[ $elapsed -lt $timeout ]]; do
-        if ! kill -0 $arch_pid 2>/dev/null && ! kill -0 $sec_pid 2>/dev/null && ! kill -0 $test_pid 2>/dev/null; then
+        local all_done=true
+        for pid in "${review_pids[@]}"; do
+            if kill -0 $pid 2>/dev/null; then
+                all_done=false
+                break
+            fi
+        done
+        
+        if [[ "$all_done" == true ]]; then
             break
         fi
+        
         sleep 5
         elapsed=$((elapsed + 5))
         if [[ $((elapsed % 30)) -eq 0 ]]; then
@@ -293,7 +309,9 @@ Please analyze these files and provide your review in the JSON format specified 
     done
     
     # Kill any remaining processes
-    kill $arch_pid $sec_pid $test_pid 2>/dev/null || true
+    for pid in "${review_pids[@]}"; do
+        kill $pid 2>/dev/null || true
+    done
     
     # Check what review files were created
     log_info "Checking AI review results..."
@@ -312,7 +330,10 @@ Please analyze these files and provide your review in the JSON format specified 
         python3 "$PROJECT_ROOT/scripts/aggregate-reviews.py" \
             "$temp_dir/architect.json" \
             "$temp_dir/security.json" \
-            "$temp_dir/testing.json"
+            "$temp_dir/testing.json" \
+            "$temp_dir/documentation.json" \
+            "$temp_dir/devops.json" \
+            "$temp_dir/ux.json"
         local review_result=$?
     else
         # Simple check if any reviews failed

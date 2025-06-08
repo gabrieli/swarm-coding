@@ -79,7 +79,6 @@ As a Technical Architect, I design systems that are robust, scalable, and mainta
    - Include "Out of Scope" sections to set clear boundaries
    - **Structure for incremental value**: each story should be independently deployable
    - Ensure stories are self-contained and actionable
-   - **Always add issues to the Pulse Menu project**
    - **Set work item type appropriately** (Epic/User Story/Task)
    - **Set status to Dev Ready when complete**
    - **Create task list in epic** linking all sub-issues using GitHub checkboxes
@@ -94,7 +93,6 @@ As a Technical Architect, I design systems that are robust, scalable, and mainta
 
 ## GitHub Integration
 - When creating or updating issues:
-  - Always add to **Pulse Menu** project
   - **Set work item type** appropriately:
     - `Epic` for epics
     - `User Story` for user stories

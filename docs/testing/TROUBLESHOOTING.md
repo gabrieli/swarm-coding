@@ -1,6 +1,6 @@
 # Testing Troubleshooting Guide
 
-This guide helps you diagnose and fix common testing issues in the Pulse project across all platforms.
+This guide helps you diagnose and fix common testing issues in your project across all platforms.
 
 ## Quick Diagnostics
 

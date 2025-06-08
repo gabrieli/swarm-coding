@@ -50,10 +50,8 @@ Example:
 - **PM**: Product Manager
 - **ARCH**: Technical Architect  
 - **DEV**: Developer
-- **LEAD**: Lead Developer
 - **SEC**: Security Expert
 - **QA**: QA Tester
-- **SM**: Scrum Master
 
 ### 6. Epic/Sprint Tracking
 

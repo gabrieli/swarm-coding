@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script to create a GitHub issue and set it to Dev Ready status in Pulse Menu project
+# Script to create a GitHub issue and set it to Dev Ready status in project
 
 if [ $# -lt 2 ]; then
     echo "Usage: $0 <title> <body_file>"
@@ -16,20 +16,30 @@ if [ ! -f "$BODY_FILE" ]; then
     exit 1
 fi
 
-# Project constants
-PROJECT_ID="PVT_kwHOACofRM4A5PeM"
-FIELD_ID="PVTSSF_lAHOACofRM4A5PeMzguEr8I"
-DEV_READY_ID="61e4505c"
-OWNER="gabrieli"
-PROJECT_NUMBER="1"
+# Load configuration
+REQUIRE_GITHUB_CONFIG=true
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/lib/config-loader.sh"
+
+# Validate configuration
+if ! validate_github_config; then
+    echo "Error: Invalid or missing GitHub configuration" >&2
+    exit 1
+fi
+
+# Use configuration values
+OWNER="$REPO_OWNER"
+PROJECT_ID="$PROJECT_ID"
+FIELD_ID="$STATUS_FIELD_ID"
+DEV_READY_ID="$DEV_READY_OPTION_ID"
 
 echo "Creating issue..."
 ISSUE_URL=$(gh issue create --title "$TITLE" --body-file "$BODY_FILE" --assignee @me)
 ISSUE_NUMBER=$(echo $ISSUE_URL | grep -o '[0-9]*$')
 echo "Created issue #$ISSUE_NUMBER"
 
-echo "Adding to Pulse Menu project..."
-gh issue edit $ISSUE_NUMBER --add-project "Pulse Menu"
+echo "Adding to $PROJECT_NAME project..."
+gh issue edit $ISSUE_NUMBER --add-project "$PROJECT_NAME"
 
 echo "Getting project item ID..."
 sleep 2  # Give GitHub time to process

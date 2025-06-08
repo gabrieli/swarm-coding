@@ -9,7 +9,6 @@ A comprehensive script for managing project board items, based on common archite
 ### Prerequisites
 
 - GitHub CLI (`gh`) installed and authenticated
-- Access to the Pulse Menu project board
 
 ### Usage
 
@@ -130,7 +129,6 @@ Set `set -x` at the top of the script to see detailed execution steps.
 
 These scripts automate the GitHub integration requirements from `ROLE_ARCHITECT.md`:
 
-- ✅ Always add issues to Pulse Menu project
 - ✅ Set work item types appropriately (Epic/User Story)  
 - ✅ Set status to Dev Ready when complete
 - ✅ Create task list in epic linking sub-issues

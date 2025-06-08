@@ -1,6 +1,6 @@
 # Testing Best Practices
 
-This guide outlines testing patterns, anti-patterns, and best practices for maintaining high-quality tests in the Pulse project.
+This guide outlines testing patterns, anti-patterns, and best practices for maintaining high-quality tests in your project.
 
 ## Core Testing Principles
 

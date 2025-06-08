@@ -1,6 +1,6 @@
 # Testing Environment Setup Guide
 
-This guide walks you through setting up your development environment for testing the Pulse project across all platforms.
+This guide walks you through setting up your development environment for testing your project across all platforms.
 
 ## Prerequisites
 
@@ -33,8 +33,8 @@ node --version  # Should be 18+
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/pulse.git
-cd pulse
+git clone https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME.git
+cd YOUR_REPO_NAME
 ```
 
 ### 2. Install Kotlin Multiplatform
@@ -320,7 +320,7 @@ Run this script to validate your setup:
 #!/bin/bash
 # save as validate-setup.sh
 
-echo "🔍 Validating Pulse testing environment..."
+echo "🔍 Validating project testing environment..."
 
 # Check Java
 if java -version 2>&1 | grep -q "version \"17"; then

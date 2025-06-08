@@ -1,6 +1,6 @@
 # Unit Testing Guide
 
-This guide covers unit testing practices for the Pulse project across all platforms (shared, iOS, and Android).
+This guide covers unit testing practices for your project across all platforms (shared, iOS, and Android).
 
 ## Overview
 
@@ -298,8 +298,8 @@ fun `menuUpdates - emits new values when menu changes`() = runTest {
 ### 1. Package Structure
 Mirror your source code structure in test directories:
 ```
-src/main/kotlin/com/example/pulse/service/MenuService.kt
-src/test/kotlin/com/example/pulse/service/MenuServiceTest.kt
+src/main/kotlin/com/example/YOUR_PROJECT_NAME/service/YourService.kt
+src/test/kotlin/com/example/YOUR_PROJECT_NAME/service/YourServiceTest.kt
 ```
 
 ### 2. Test Fixtures

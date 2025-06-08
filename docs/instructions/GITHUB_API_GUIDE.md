@@ -5,12 +5,12 @@
 ### 1. Create Issues
 ```bash
 # Create Epic
-gh issue create --repo gabrieli/pulse-menu \
+gh issue create --repo YOUR_GITHUB_USERNAME/YOUR_REPO_NAME \
   --title "Epic: [Name]" \
   --body-file epic_content.md
 
 # Create User Story
-gh issue create --repo gabrieli/pulse-menu \
+gh issue create --repo YOUR_GITHUB_USERNAME/YOUR_REPO_NAME \
   --title "Story: [Name]" \
   --body-file story_content.md
 ```
@@ -18,8 +18,8 @@ gh issue create --repo gabrieli/pulse-menu \
 ### 1a. Link Sub-Issues to Epic
 ```bash
 # Get issue IDs
-EPIC_ID=$(gh issue view 1 --repo gabrieli/pulse-menu --json id -q .id)
-STORY_ID=$(gh issue view 2 --repo gabrieli/pulse-menu --json id -q .id)
+EPIC_ID=$(gh issue view 1 --repo YOUR_GITHUB_USERNAME/YOUR_REPO_NAME --json id -q .id)
+STORY_ID=$(gh issue view 2 --repo YOUR_GITHUB_USERNAME/YOUR_REPO_NAME --json id -q .id)
 
 # Add as sub-issue via GraphQL
 gh api graphql -f query='
@@ -36,8 +36,8 @@ mutation {
 ### 2. Add Issues to Project
 ```bash
 # CORRECT METHOD - Use project item-add
-gh project item-add 1 --owner gabrieli \
-  --url https://github.com/gabrieli/pulse-menu/issues/[NUMBER]
+gh project item-add 1 --owner YOUR_GITHUB_USERNAME \
+  --url https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME/issues/[NUMBER]
 
 # WRONG METHOD - Don't use issue edit
 # gh issue edit [NUMBER] --add-project "Project Name"  # This often fails
@@ -48,12 +48,12 @@ gh project item-add 1 --owner gabrieli \
 #### Set Work Item Type
 ```bash
 # First, get the field and option IDs
-gh project field-list 1 --owner gabrieli --format json | \
+gh project field-list 1 --owner YOUR_GITHUB_USERNAME --format json | \
   jq '.fields[] | select(.name == "Work Item Type")'
 
 # Then update the field
 gh project item-edit \
-  --project-id PVT_kwHOACofRM4A5PeM \
+  --project-id YOUR_PROJECT_ID \
   --id [ITEM_ID] \
   --field-id [FIELD_ID] \
   --single-select-option-id [OPTION_ID]
@@ -62,7 +62,7 @@ gh project item-edit \
 ### 4. Get Project Item IDs
 ```bash
 # List all items with their IDs
-gh project item-list 1 --owner gabrieli --format json | \
+gh project item-list 1 --owner YOUR_GITHUB_USERNAME --format json | \
   jq '.items[] | {id, number: .content.number, title}'
 ```
 
@@ -76,22 +76,22 @@ gh project item-list 1 --owner gabrieli --format json | \
 ### Phase 2: Add to Project
 ```bash
 # Add each issue to project
-gh project item-add 1 --owner gabrieli \
-  --url https://github.com/gabrieli/pulse-menu/issues/2
+gh project item-add 1 --owner YOUR_GITHUB_USERNAME \
+  --url https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME/issues/2
 ```
 
 ### Phase 3: Set Field Values
 ```bash
 # Get field IDs once
-WORK_TYPE_FIELD=$(gh project field-list 1 --owner gabrieli --format json | \
+WORK_TYPE_FIELD=$(gh project field-list 1 --owner YOUR_GITHUB_USERNAME --format json | \
   jq -r '.fields[] | select(.name == "Work Item Type") | .id')
 
-USER_STORY_OPTION=$(gh project field-list 1 --owner gabrieli --format json | \
+USER_STORY_OPTION=$(gh project field-list 1 --owner YOUR_GITHUB_USERNAME --format json | \
   jq -r '.fields[] | select(.name == "Work Item Type") | .options[] | select(.name == "User Story") | .id')
 
 # Update each story
 gh project item-edit \
-  --project-id PVT_kwHOACofRM4A5PeM \
+  --project-id YOUR_PROJECT_ID \
   --id [ITEM_ID] \
   --field-id $WORK_TYPE_FIELD \
   --single-select-option-id $USER_STORY_OPTION
@@ -101,7 +101,7 @@ gh project item-edit \
 
 ### API Limitations
 - **Parent Issue Field**: Use sub-issues API, not project field
-- **Project Names**: Use project number (1) not name ("Pulse Menu")  
+- **Project Names**: Use project number (1) not name ("Your Project Name")  
 - **Field Names**: Case-sensitive ("Work Item Type" not "work item type")
 
 ### Common Pitfalls
@@ -116,13 +116,13 @@ gh project item-edit \
 gh auth status
 
 # List available fields
-gh project field-list 1 --owner gabrieli
+gh project field-list 1 --owner YOUR_GITHUB_USERNAME
 
 # Check item details
-gh project item-list 1 --owner gabrieli --format json | jq
+gh project item-list 1 --owner YOUR_GITHUB_USERNAME --format json | jq
 
 # View specific issue fields
-gh issue view [NUMBER] --repo gabrieli/pulse-menu --json projectItems
+gh issue view [NUMBER] --repo YOUR_GITHUB_USERNAME/YOUR_REPO_NAME --json projectItems
 ```
 
 ## Template Script
@@ -132,8 +132,8 @@ gh issue view [NUMBER] --repo gabrieli/pulse-menu --json projectItems
 # Create and configure epic with stories
 
 # Variables
-OWNER="gabrieli"
-REPO="pulse-menu"
+OWNER="YOUR_GITHUB_USERNAME"
+REPO="YOUR_REPO_NAME"
 PROJECT_NUM="1"
 
 # Create epic
@@ -159,10 +159,10 @@ for story in story1.md story2.md story3.md; do
   
   # Set work item type
   gh project item-edit \
-    --project-id PVT_kwHOACofRM4A5PeM \
+    --project-id YOUR_PROJECT_ID \
     --id $ITEM_ID \
-    --field-id PVTSSF_lAHOACofRM4A5PeMzguEu1Y \
-    --single-select-option-id d027d90e
+    --field-id YOUR_WORK_ITEM_TYPE_FIELD_ID \
+    --single-select-option-id YOUR_USER_STORY_OPTION_ID
 done
 ```
 

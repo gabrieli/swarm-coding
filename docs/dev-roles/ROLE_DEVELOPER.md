@@ -68,7 +68,7 @@ As a Developer, I write code that I'm proud to sign my name to. Every line of co
    1. Implement feature/fix
    2. Commit with clear, descriptive message
    3. Push to feature branch
-   4. Wait for reviews (Lead Dev/Security/Architect)
+   4. Wait for reviews (Architecture, Security, Testing, Documentation, DevOps, UX as applicable)
    5. Address ALL feedback thoroughly
    6. Commit fixes with "Address review feedback" message
    7. Push updates

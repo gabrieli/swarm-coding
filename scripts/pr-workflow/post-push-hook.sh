@@ -8,10 +8,10 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/lib/validation-core.sh"
 
-# Configuration
-ASYNC_MODE="${PULSE_PR_ASYNC:-true}"
-NOTIFY_METHOD="${PULSE_PR_NOTIFY:-desktop}"  # desktop, terminal, none
-VALIDATION_MODE="${PULSE_PR_VALIDATION_MODE:-incremental}"
+# Configuration (these will be overridden by config-loader.sh if set)
+ASYNC_MODE="${VALIDATION_ASYNC_MODE:-true}"
+NOTIFY_METHOD="${NOTIFICATION_METHOD:-desktop}"  # desktop, terminal, none
+VALIDATION_MODE="${DEFAULT_VALIDATION_MODE:-incremental}"
 
 # Get current branch
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
@@ -76,8 +76,8 @@ run_async_validation() {
             gh pr comment "$pr_number" --body "✅ Post-push validation passed for commit $(git rev-parse --short HEAD)"
             
             # Remove validation-failed label if present
-            gh pr edit "$pr_number" --remove-label "validation-failed" 2>/dev/null || true
-            gh pr edit "$pr_number" --add-label "validated" 2>/dev/null || true
+            gh pr edit "$pr_number" --remove-label "$VALIDATION_FAILED_LABEL" 2>/dev/null || true
+            gh pr edit "$pr_number" --add-label "$VALIDATED_LABEL" 2>/dev/null || true
             
             send_notification "PR #$pr_number Validation" "All checks passed! ✅" "normal"
         else
@@ -93,11 +93,11 @@ run_async_validation() {
 
 $VALIDATION_SUMMARY
 
-View detailed logs: \`~/.pulse-pr-cache/validation-${pr_number}-*.log\`"
+View detailed logs: \`${CACHE_DIR}/validation-${pr_number}-*.log\`"
             
             # Update labels
-            gh pr edit "$pr_number" --add-label "validation-failed" 2>/dev/null || true
-            gh pr edit "$pr_number" --remove-label "validated" 2>/dev/null || true
+            gh pr edit "$pr_number" --add-label "$VALIDATION_FAILED_LABEL" 2>/dev/null || true
+            gh pr edit "$pr_number" --remove-label "$VALIDATED_LABEL" 2>/dev/null || true
             
             send_notification "PR #$pr_number Validation" "Validation failed! Check PR for details. ❌" "critical"
         fi
@@ -130,7 +130,7 @@ else
         
         # Update PR
         gh pr comment "$PR_NUMBER" --body "✅ Post-push validation passed for commit $(git rev-parse --short HEAD)"
-        gh pr edit "$PR_NUMBER" --remove-label "validation-failed" --add-label "validated" 2>/dev/null || true
+        gh pr edit "$PR_NUMBER" --remove-label "$VALIDATION_FAILED_LABEL" --add-label "$VALIDATED_LABEL" 2>/dev/null || true
     else
         log_error "Post-push validation failed!"
         
@@ -142,7 +142,7 @@ else
 
 $VALIDATION_SUMMARY"
         
-        gh pr edit "$PR_NUMBER" --add-label "validation-failed" --remove-label "validated" 2>/dev/null || true
+        gh pr edit "$PR_NUMBER" --add-label "$VALIDATION_FAILED_LABEL" --remove-label "$VALIDATED_LABEL" 2>/dev/null || true
         
         # Ask if user wants to see details
         if [[ -t 1 ]]; then  # Check if running in terminal

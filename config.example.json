@@ -1,0 +1,50 @@
+{
+  "github": {
+    "owner": "your-github-username",
+    "repository": "your-repo-name",
+    "project": {
+      "name": "Your Project Name",
+      "id": "PVT_xxxxxxxxxxxx",
+      "number": 1,
+      "fields": {
+        "status": {
+          "id": "PVTSSF_xxxxxxxxxxx",
+          "options": {
+            "backlog": "xxxxxxxx",
+            "pm_refined": "xxxxxxxx",
+            "dev_ready": "xxxxxxxx",
+            "in_progress": "xxxxxxxx",
+            "in_review": "xxxxxxxx",
+            "done": "xxxxxxxx"
+          }
+        },
+        "work_item_type": {
+          "id": "PVTSSF_xxxxxxxxxxx",
+          "options": {
+            "epic": "xxxxxxxx",
+            "user_story": "xxxxxxxx"
+          }
+        }
+      }
+    }
+  },
+  "pr_workflow": {
+    "default_base_branch": "main",
+    "validation": {
+      "default_mode": "full",
+      "async_mode": true,
+      "notification_method": "desktop",
+      "cache_dir": "~/.swarm-pr-cache"
+    },
+    "labels": {
+      "validated": "validated",
+      "validation_failed": "validation-failed",
+      "module_prefix": "module:"
+    }
+  },
+  "editor": "vim",
+  "notifications": {
+    "enabled": true,
+    "method": "desktop"
+  }
+}

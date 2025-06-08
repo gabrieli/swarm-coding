@@ -8,9 +8,9 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/lib/validation-core.sh"
 
-# Default values
-BASE_BRANCH="main"
-VALIDATION_MODE="full"
+# Default values from configuration (will be loaded by validation-core.sh)
+BASE_BRANCH="${DEFAULT_BASE_BRANCH:-main}"
+VALIDATION_MODE="${DEFAULT_VALIDATION_MODE:-full}"
 FORCE_CREATE=false
 INTERACTIVE=true
 DRAFT=false
@@ -190,7 +190,7 @@ $VALIDATION_SUMMARY
 - [ ] No sensitive data exposed
 
 ---
-🤖 Generated with Pulse PR Workflow
+🤖 Generated with Swarm PR Workflow
 EOF
 )
     
@@ -230,9 +230,9 @@ if gh pr create \
     
     # Add labels based on validation results
     if [[ "$VALIDATION_PASSED" == true ]]; then
-        gh pr edit "$PR_NUMBER" --add-label "validated"
+        gh pr edit "$PR_NUMBER" --add-label "$VALIDATED_LABEL"
     else
-        gh pr edit "$PR_NUMBER" --add-label "validation-failed"
+        gh pr edit "$PR_NUMBER" --add-label "$VALIDATION_FAILED_LABEL"
     fi
     
     # Add module labels
@@ -241,7 +241,7 @@ if gh pr create \
     
     for module in $AFFECTED_MODULES; do
         if [[ "$module" != "none" ]]; then
-            gh pr edit "$PR_NUMBER" --add-label "module:$module" 2>/dev/null || true
+            gh pr edit "$PR_NUMBER" --add-label "${MODULE_LABEL_PREFIX}$module" 2>/dev/null || true
         fi
     done
     

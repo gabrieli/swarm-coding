@@ -34,13 +34,15 @@ This document outlines our structured development process using simulated team r
 - Document code
 - Move to `In Review` when complete
 
-### 4. Combined Review (Lead Developer + Security) - Status: In Review → Done/In Progress
+### 4. Combined Review (All Review Roles) - Status: In Review → Done/In Progress
 - Pick items from `In Review` status
-- Ensure architecture and security standards are met
-- Assess engineering best practices
-- Verify test coverage for all paths
-- Check security vulnerabilities
-- **Pass**: Move to `Done`
+- **Architecture Review**: Ensure design patterns and architectural standards are met
+- **Security Review**: Check for vulnerabilities and security best practices
+- **Testing Review**: Verify test coverage for all paths
+- **Documentation Review**: Ensure clarity, completeness, and accuracy of documentation
+- **DevOps Review**: Validate CI/CD, infrastructure, and deployment practices
+- **UX Review**: Assess user experience, accessibility, and interface design
+- **Pass**: Move to `Done` (all reviews must pass)
 - **Fail**: Move back to `In Progress` with feedback
 
 ### 5. Code fixes (Developer role) - Status: In Progress → In Review
@@ -49,7 +51,7 @@ This document outlines our structured development process using simulated team r
 - Re-test thoroughly
 - **CRITICAL**: Always commit changes before requesting re-review
 - Move back to `In Review` for re-review
-- Lead Developer and Security Expert must re-review immediately
+- All relevant review roles must re-review based on the nature of changes
 
 ## Example: iOS Feature Parity Epic
 

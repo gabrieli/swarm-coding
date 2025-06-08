@@ -8,7 +8,7 @@
 | **PM Refined** | Technical Architect | Requirements complete, ready for technical design |
 | **Dev Ready** | Developer | Architecture complete, ready for implementation |
 | **In Progress** | Developer | Active development work |
-| **In Review** | Lead Developer + Security | Code review and security review combined |
+| **In Review** | All Review Roles | Architecture, Security, Testing, Documentation, DevOps, and UX reviews |
 | **Done** | All | Complete and deployed |
 
 ## Status Transitions by Role
@@ -29,10 +29,16 @@
 - **In Progress**: Move to `In Progress` when starting work
 - **Complete**: Move to `In Review`
 
-### Lead Developer + Security Expert
+### Review Roles (Architecture, Security, Testing, Documentation, DevOps, UX)
 - **Action**: Pick items from `In Review`
-- **Work**: Code review + security review (combined phase)
-- **Pass**: Move to `Done`
+- **Work**: Combined review phase covering all aspects:
+  - Architecture: Design patterns and standards
+  - Security: Vulnerabilities and best practices
+  - Testing: Coverage and quality
+  - Documentation: Clarity and completeness
+  - DevOps: CI/CD and deployment
+  - UX: User experience and accessibility
+- **Pass**: Move to `Done` (all applicable reviews must pass)
 - **Fail**: Move back to `In Progress` with feedback
 
 ### QA Tester
@@ -42,19 +48,19 @@
 
 ```bash
 # Get items by status
-gh project item-list 1 --owner gabrieli --format json | jq '.items[] | select(.status == "Dev Ready") | {number: .content.number, title}'
+gh project item-list 1 --owner YOUR_GITHUB_USERNAME --format json | jq '.items[] | select(.status == "Dev Ready") | {number: .content.number, title}'
 
 # Update item status
-gh project item-edit --project-id PVT_kwHOACofRM4A5PeM --id [ITEM_ID] --field-id PVTSSF_lAHOACofRM4A5PeMzguEr8I --single-select-option-id [STATUS_ID]
+gh project item-edit --project-id YOUR_PROJECT_ID --id [ITEM_ID] --field-id YOUR_STATUS_FIELD_ID --single-select-option-id [STATUS_ID]
 ```
 
 ## Status IDs Reference
-- Backlog: `f75ad846`
-- PM Refined: `4bbaa247`
-- Dev Ready: `61e4505c`
-- In Progress: `47fc9ee4`
-- In Review: `df73e18b`
-- Done: `98236657`
+- Backlog: `YOUR_BACKLOG_STATUS_ID`
+- PM Refined: `YOUR_PM_REFINED_STATUS_ID`
+- Dev Ready: `YOUR_DEV_READY_STATUS_ID`
+- In Progress: `YOUR_IN_PROGRESS_STATUS_ID`
+- In Review: `YOUR_IN_REVIEW_STATUS_ID`
+- Done: `YOUR_DONE_STATUS_ID`
 
 ## Example Workflow
 
@@ -63,7 +69,7 @@ gh project item-edit --project-id PVT_kwHOACofRM4A5PeM --id [ITEM_ID] --field-id
 3. Architect adds technical design → `Dev Ready`
 4. Developer starts work → `In Progress`
 5. Developer completes, tested → `In Review`
-6. Lead Dev + Security approve → `Done`
+6. All review roles approve → `Done`
 
 ## Important Notes
 - Only move items forward when all work for that phase is complete

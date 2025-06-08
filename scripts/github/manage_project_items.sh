@@ -123,7 +123,7 @@ function add_issue_to_project() {
     
     log_info "Adding issue #$issue_number to project..."
     
-    gh issue edit $issue_number --repo $REPO_OWNER/$REPO_NAME --add-project "Pulse Menu"
+    gh issue edit $issue_number --repo $REPO_OWNER/$REPO_NAME --add-project "$PROJECT_NAME"
     
     log_info "Added issue #$issue_number to project"
 }

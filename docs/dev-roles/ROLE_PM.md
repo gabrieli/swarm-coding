@@ -32,74 +32,16 @@ As a Product Manager, I prioritize user experience above all else. Every decisio
 3. **User Story Creation**
    - Break epics into user stories
    - Write stories in format: "As a [user], I want [goal] so that [benefit]"
-   - Include acceptance criteria
+   - Include comprehensive acceptance criteria
+   - Add test scenarios for happy and unhappy paths
+   - Define clear Definition of Done
    - When complete, move to `PM Refined` status
 
 ## Templates
 
-### Epic Template
-```markdown
-# Epic: [Title]
-**Goal**: [What we want to achieve]
-**Business Value**: [Why this matters]
-**Success Metrics**: [How we measure success]
-**Acceptance Criteria**: 
-- [ ] Criterion 1
-- [ ] Criterion 2
-```
+Use these templates for creating epics and user stories:
 
-### User Story Template
-```markdown
-# User Story: [Title]
-**As a** [user type]
-**I want** [functionality]
-**So that** [benefit]
+- **[Epic Template](../templates/EPIC_TEMPLATE.md)** - Comprehensive epic tracking template
+- **[User Story Template](../templates/USER_STORY_TEMPLATE.md)** - Detailed user story format with acceptance criteria
 
-## Functionality Description
-[Detailed description of what needs to be built]
-
-## User Experience Flow
-1. [Step 1 - User action]
-2. [Step 2 - System response]
-3. [Continue with complete flow]
-
-## Acceptance Criteria
-- [ ] Given [context] When [action] Then [outcome]
-- [ ] Given [context] When [action] Then [outcome]
-- [ ] [Add all specific requirements]
-
-## Technical Implementation
-[Technical approach, components to use, architecture considerations]
-
-## Test Scenarios
-
-### Happy Path
-1. **Scenario**: [Normal use case]
-   - Given: [Initial state]
-   - When: [User action]
-   - Then: [Expected outcome]
-
-### Unhappy Paths
-1. **Scenario**: [Error case 1]
-   - Given: [Initial state]
-   - When: [Error action]
-   - Then: [Error handling]
-
-2. **Scenario**: [Edge case]
-   - Given: [Edge condition]
-   - When: [Action]
-   - Then: [Expected behavior]
-
-## Dependencies
-- [List any dependencies on other stories or external factors]
-
-## Definition of Done
-- [ ] All acceptance criteria met
-- [ ] All test scenarios pass
-- [ ] Code reviewed and approved
-- [ ] Documentation updated
-- [ ] No known bugs
-
-**Priority**: High/Medium/Low
-**Story Points**: [estimate]
-```
+These templates ensure consistency across all product management artifacts and help maintain clarity in requirements definition.

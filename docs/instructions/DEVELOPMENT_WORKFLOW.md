@@ -53,32 +53,32 @@ This document outlines our structured development process using simulated team r
 - Move back to `In Review` for re-review
 - All relevant review roles must re-review based on the nature of changes
 
-## Example: iOS Feature Parity Epic
+## Example: Cross-Platform Feature Epic
 
 ### PM Phase
 ```markdown
-Epic: iOS Feature Parity
-Goal: Achieve feature parity between iOS and Android apps
+Epic: Cross-Platform Feature Parity
+Goal: Achieve feature parity across all supported platforms
 Business Value: Consistent user experience across platforms
 
 User Stories:
-1. As an iOS user, I want to capture menu images
-2. As an iOS user, I want to process menu images
-3. As an iOS user, I want to view food recommendations
+1. As a user, I want to capture images on my platform
+2. As a user, I want to process captured images
+3. As a user, I want to view processed results
 ```
 
 ### Architect Phase
 ```markdown
 Technical Breakdown:
-1. Camera Integration Task
-   - Platform: iOS specific
-   - Components: CameraView, PermissionHandler
+1. Image Capture Task
+   - Platform: Platform-specific implementations
+   - Components: CaptureView, PermissionHandler
    
 2. Image Processing Task
-   - Platform: Shared with iOS specific
-   - Components: ImageProcessor, ImageConverter
+   - Platform: Shared core with platform adapters
+   - Components: ImageProcessor, DataConverter
    
-3. Supabase Integration Task
+3. API Integration Task
    - Platform: Shared
    - Components: APIClient, DataModels
 ```

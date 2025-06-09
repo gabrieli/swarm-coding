@@ -10,32 +10,32 @@
 # Option 2: Manual steps
 ISSUE_URL=$(gh issue create --title "Title" --body "Body" --assignee @me)
 ISSUE_NUMBER=$(echo $ISSUE_URL | grep -o '[0-9]*$')
-gh issue edit $ISSUE_NUMBER --add-project "YOUR_PROJECT_NAME"
+gh issue edit $ISSUE_NUMBER --add-project "<project-name>"
 # Then update status (see full guide)
 ```
 
 ### Update Issue Status
 ```bash
 # Get item ID
-ITEM_ID=$(gh project item-list 1 --owner YOUR_GITHUB_USERNAME --format json | jq -r '.items[] | select(.content.number==14) | .id')
+ITEM_ID=$(gh project item-list 1 --owner <github-username> --format json | jq -r '.items[] | select(.content.number==14) | .id')
 
 # Update to Dev Ready
 gh api graphql -F query=@update_status.graphql \
-  -f projectId="YOUR_PROJECT_ID" \
+  -f projectId="<project-id>" \
   -f itemId="$ITEM_ID" \
-  -f fieldId="YOUR_STATUS_FIELD_ID" \
-  -f optionId="YOUR_STATUS_OPTION_ID"
+  -f fieldId="<status-field-id>" \
+  -f optionId="<status-option-id>"
 ```
 
 ### View Project Items
 ```bash
-gh project item-list 1 --owner YOUR_GITHUB_USERNAME --format json | jq '.items[] | {number: .content.number, title: .content.title, status: .fieldValues.Status}'
+gh project item-list 1 --owner <github-username> --format json | jq '.items[] | {number: .content.number, title: .content.title, status: .fieldValues.Status}'
 ```
 
 ## Project Constants
-- **Project ID**: YOUR_PROJECT_ID
-- **Status Field ID**: YOUR_STATUS_FIELD_ID
-- **Dev Ready Option**: YOUR_DEV_READY_STATUS_ID
+- **Project ID**: <project-id>
+- **Status Field ID**: <status-field-id>
+- **Dev Ready Option**: <dev-ready-status-id>
 
 ## GraphQL Templates
 

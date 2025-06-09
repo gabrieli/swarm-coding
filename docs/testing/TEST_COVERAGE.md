@@ -381,7 +381,7 @@ jobs:
 
 ```markdown
 <!-- In README.md -->
-![Coverage](https://codecov.io/gh/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME/branch/main/graph/badge.svg)
+![Coverage](https://codecov.io/gh/<github-username>/<repo-name>/branch/main/graph/badge.svg)
 ![Coverage](https://img.shields.io/badge/coverage-85%25-brightgreen.svg)
 ```
 

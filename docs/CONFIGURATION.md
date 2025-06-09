@@ -15,40 +15,31 @@ This guide explains how to configure the Swarm Coding project for your environme
 
 ## Configuration File Structure
 
-The `config.json` file contains all project configuration:
+The project configuration is stored in `config.json`. For a comprehensive template with all available options, see:
 
+**[Project Configuration Template](templates/PROJECT_CONFIG_TEMPLATE.json)**
+
+The template includes:
+- Complete GitHub integration setup
+- Workflow status definitions
+- Review type configurations
+- Testing framework settings
+- Tool specifications
+- Environment configurations
+- Team information
+
+Basic configuration example:
 ```json
 {
   "github": {
-    "owner": "your-github-username",
-    "repository": "your-repo-name",
+    "owner": "<github-username>",
+    "repository": "<repo-name>",
     "project": {
-      "name": "Your Project Name",
-      "id": "PVT_xxxxxxxxxxxx",
-      "number": 1,
-      "fields": {
-        // Field and option IDs from GitHub Projects
-      }
+      "number": "<project-number>"
     }
   },
   "pr_workflow": {
-    "default_base_branch": "main",
-    "validation": {
-      "default_mode": "full",
-      "async_mode": true,
-      "notification_method": "desktop",
-      "cache_dir": "~/.swarm-pr-cache"
-    },
-    "labels": {
-      "validated": "validated",
-      "validation_failed": "validation-failed",
-      "module_prefix": "module:"
-    }
-  },
-  "editor": "vim",
-  "notifications": {
-    "enabled": true,
-    "method": "desktop"
+    "default_base_branch": "main"
   }
 }
 ```
@@ -98,8 +89,8 @@ To find your GitHub Project IDs:
 Example GraphQL query:
 ```bash
 gh api graphql -f query='{
-  organization(login: "YOUR_ORG") {
-    projectV2(number: PROJECT_NUMBER) {
+  organization(login: "<org-name>") {
+    projectV2(number: <project-number>) {
       id
       fields(first: 20) {
         nodes {

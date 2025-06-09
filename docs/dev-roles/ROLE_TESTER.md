@@ -48,45 +48,27 @@ As a QA Tester, I am the guardian of user experience. I approach every feature w
 
 ## Platform Testing Checklist
 
-### iOS
-- [ ] Test on simulator (different iOS versions)
-- [ ] Test on physical device
-- [ ] Check different screen sizes
+### Mobile Platforms
+- [ ] Test on simulators/emulators (different OS versions)
+- [ ] Test on physical devices
+- [ ] Check different screen sizes and densities
 - [ ] Verify accessibility features
 - [ ] Test offline behavior
-
-### Android
-- [ ] Test on emulator (different API levels)
-- [ ] Test on physical devices
-- [ ] Check different screen densities
-- [ ] Test configuration changes
+- [ ] Test configuration changes (rotation, language)
 - [ ] Verify permissions handling
 
-## Bug Template
-```markdown
-# Bug: [Title]
+### Web Platforms
+- [ ] Test on different browsers
+- [ ] Check responsive design
+- [ ] Verify keyboard navigation
+- [ ] Test with screen readers
+- [ ] Check different viewport sizes
 
-**Platform**: iOS/Android
-**Version**: [App version]
-**Device**: [Device model/OS version]
+## Templates
 
-## Description
-[What's wrong]
+Use these templates for testing activities:
 
-## Steps to Reproduce
-1. [Step 1]
-2. [Step 2]
-3. [Step 3]
+- **[Bug Report Template](../templates/BUG_REPORT_TEMPLATE.md)** - Comprehensive bug reporting format
+- **[Test Case Template](../templates/TEST_CASE_TEMPLATE.md)** - Detailed test case documentation
 
-## Expected Behavior
-[What should happen]
-
-## Actual Behavior
-[What actually happens]
-
-## Screenshots/Logs
-[Attach relevant evidence]
-
-## Severity
-Critical/High/Medium/Low
-```
+These templates ensure consistent and thorough testing documentation across the project.

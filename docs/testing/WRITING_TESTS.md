@@ -2,6 +2,15 @@
 
 This comprehensive guide covers how to write different types of tests for your project, including unit tests, UI tests, and integration tests across all platforms.
 
+## Test Templates
+
+For detailed test templates and patterns, refer to:
+- **[Unit Test Template](../templates/UNIT_TEST_TEMPLATE.md)** - Comprehensive unit testing patterns across languages
+- **[Integration Test Template](../templates/INTEGRATION_TEST_TEMPLATE.md)** - Integration testing with databases, APIs, and services
+- **[Test Case Template](../templates/TEST_CASE_TEMPLATE.md)** - Manual test case documentation format
+
+The examples below provide quick references for common testing scenarios.
+
 ## Test Structure and Organization
 
 ### Test File Naming Conventions
@@ -52,7 +61,7 @@ func testCalculatePrice_WhenNegativePrice_ShouldThrowError() { }
 
 #### Basic Unit Test
 ```kotlin
-// shared/src/commonTest/kotlin/com/example/YOUR_PROJECT_NAME/YourParserTest.kt
+// shared/src/commonTest/kotlin/com/example/<project-name>/YourParserTest.kt
 class MenuParserTest {
     
     private lateinit var parser: MenuParser
@@ -99,7 +108,7 @@ class MenuParserTest {
 
 #### Testing Coroutines
 ```kotlin
-// shared/src/commonTest/kotlin/com/example/YOUR_PROJECT_NAME/YourServiceTest.kt
+// shared/src/commonTest/kotlin/com/example/<project-name>/YourServiceTest.kt
 class MenuServiceTest {
     
     @Test
@@ -135,7 +144,7 @@ class MenuServiceTest {
 
 #### Testing ViewModels
 ```kotlin
-// shared/src/commonTest/kotlin/com/example/YOUR_PROJECT_NAME/YourViewModelTest.kt
+// shared/src/commonTest/kotlin/com/example/<project-name>/YourViewModelTest.kt
 class MenuViewModelTest {
     
     @Test
@@ -179,7 +188,7 @@ class MenuViewModelTest {
 ### Android-Specific Unit Tests
 
 ```kotlin
-// androidApp/src/test/java/com/example/YOUR_PROJECT_NAME/AndroidFormatterTest.kt
+// androidApp/src/test/java/com/example/<project-name>/AndroidFormatterTest.kt
 class AndroidMenuFormatterTest {
     
     @Test
@@ -253,7 +262,7 @@ class MenuFormatterTests: XCTestCase {
 ### Android UI Tests with Compose
 
 ```kotlin
-// androidApp/src/androidTest/java/com/example/YOUR_PROJECT_NAME/YourScreenTest.kt
+// androidApp/src/androidTest/java/com/example/<project-name>/YourScreenTest.kt
 class MenuScreenTest {
     
     @get:Rule
@@ -368,7 +377,7 @@ class MenuScreenUITests: XCTestCase {
 
 #### Android Page Objects
 ```kotlin
-// androidApp/src/androidTest/java/com/example/YOUR_PROJECT_NAME/pages/YourPage.kt
+// androidApp/src/androidTest/java/com/example/<project-name>/pages/YourPage.kt
 class MenuPage(private val composeRule: ComposeContentTestRule) {
     
     fun assertMenuItemDisplayed(name: String): MenuPage {
@@ -449,7 +458,7 @@ func testMenuFlow_CompleteUserJourney() {
 ### Testing with Supabase
 
 ```kotlin
-// shared/src/commonTest/kotlin/com/example/YOUR_PROJECT_NAME/BackendIntegrationTest.kt
+// shared/src/commonTest/kotlin/com/example/<project-name>/BackendIntegrationTest.kt
 class SupabaseIntegrationTest {
     
     private lateinit var supabaseClient: SupabaseClient
@@ -523,7 +532,7 @@ class SupabaseIntegrationTest {
 ### Testing Image Processing
 
 ```kotlin
-// shared/src/commonTest/kotlin/com/example/YOUR_PROJECT_NAME/DataProcessingTest.kt
+// shared/src/commonTest/kotlin/com/example/<project-name>/DataProcessingTest.kt
 class ImageProcessingTest {
     
     @Test
@@ -563,7 +572,7 @@ class ImageProcessingTest {
 ### Test Data Builders
 
 ```kotlin
-// shared/src/commonTest/kotlin/com/example/YOUR_PROJECT_NAME/builders/TestDataBuilders.kt
+// shared/src/commonTest/kotlin/com/example/<project-name>/builders/TestDataBuilders.kt
 class MenuItemBuilder {
     private var name: String = "Test Item"
     private var price: Double = 9.99
@@ -604,7 +613,7 @@ fun `calculateTotal - sums prices correctly`() {
 ### Test Fixtures
 
 ```kotlin
-// shared/src/commonTest/kotlin/com/example/YOUR_PROJECT_NAME/fixtures/TestFixtures.kt
+// shared/src/commonTest/kotlin/com/example/<project-name>/fixtures/TestFixtures.kt
 object TestFixtures {
     val sampleMenu = Menu(
         items = listOf(
@@ -637,7 +646,7 @@ object TestFixtures {
 ### Creating Mock Objects
 
 ```kotlin
-// shared/src/commonTest/kotlin/com/example/YOUR_PROJECT_NAME/mocks/MockServices.kt
+// shared/src/commonTest/kotlin/com/example/<project-name>/mocks/MockServices.kt
 class MockMenuService : MenuService {
     var menuToReturn: Menu = Menu(emptyList())
     var shouldThrowError = false

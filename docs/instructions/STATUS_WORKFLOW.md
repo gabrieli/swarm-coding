@@ -1,6 +1,10 @@
 # Status Workflow Guide
 
-## Status Mapping to Roles
+## Configurable Workflow States
+
+The Swarm Coding workflow uses a configurable status system. Below is an example workflow that can be customized to match your team's process:
+
+## Example Status Mapping to Roles
 
 | Status | Role Responsible | Description |
 |--------|-----------------|-------------|
@@ -10,6 +14,8 @@
 | **In Progress** | Developer | Active development work |
 | **In Review** | All Review Roles | Architecture, Security, Testing, Documentation, DevOps, and UX reviews |
 | **Done** | All | Complete and deployed |
+
+*Note: These statuses are examples. Configure your own statuses in your project settings. See CUSTOMIZATION.md for details.*
 
 ## Status Transitions by Role
 
@@ -48,19 +54,19 @@
 
 ```bash
 # Get items by status
-gh project item-list 1 --owner YOUR_GITHUB_USERNAME --format json | jq '.items[] | select(.status == "Dev Ready") | {number: .content.number, title}'
+gh project item-list 1 --owner <github-username> --format json | jq '.items[] | select(.status == "Dev Ready") | {number: .content.number, title}'
 
 # Update item status
-gh project item-edit --project-id YOUR_PROJECT_ID --id [ITEM_ID] --field-id YOUR_STATUS_FIELD_ID --single-select-option-id [STATUS_ID]
+gh project item-edit --project-id <project-id> --id [ITEM_ID] --field-id <status-field-id> --single-select-option-id [STATUS_ID]
 ```
 
 ## Status IDs Reference
-- Backlog: `YOUR_BACKLOG_STATUS_ID`
-- PM Refined: `YOUR_PM_REFINED_STATUS_ID`
-- Dev Ready: `YOUR_DEV_READY_STATUS_ID`
-- In Progress: `YOUR_IN_PROGRESS_STATUS_ID`
-- In Review: `YOUR_IN_REVIEW_STATUS_ID`
-- Done: `YOUR_DONE_STATUS_ID`
+- Backlog: `<backlog-status-id>`
+- PM Refined: `<pm-refined-status-id>`
+- Dev Ready: `<dev-ready-status-id>`
+- In Progress: `<in-progress-status-id>`
+- In Review: `<in-review-status-id>`
+- Done: `<done-status-id>`
 
 ## Example Workflow
 

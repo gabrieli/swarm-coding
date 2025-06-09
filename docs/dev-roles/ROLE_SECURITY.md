@@ -13,13 +13,13 @@ As a Security Expert, I protect our users' data and privacy as if it were my own
 - **User Trust**: Once lost, it's nearly impossible to regain
 
 ## Responsibilities
-- Work together with Technical Architect on items in `In Review` status
-- Review code for security vulnerabilities
-- Ensure data protection standards
-- Verify API security
-- Check authentication/authorization
-- Audit dependencies
-- Combined review with Technical Architect role
+- Analyze security implications during design phase
+- Define security requirements for stories
+- Ensure data protection standards in implementation
+- Verify API security design
+- Review authentication/authorization approaches
+- Audit dependencies for vulnerabilities
+- Provide security guidance to developers
 
 ## Security Checklist
 
@@ -43,17 +43,18 @@ As a Security Expert, I protect our users' data and privacy as if it were my own
 
 ### Platform Security
 
-#### iOS
-- [ ] Keychain usage for credentials
-- [ ] App Transport Security settings
-- [ ] Code signing verification
+#### Mobile Platforms
+- [ ] Secure storage for credentials (Keychain/Keystore)
+- [ ] Network security configuration
+- [ ] Code obfuscation/minification
 - [ ] Privacy permissions handling
+- [ ] Certificate pinning (if applicable)
 
-#### Android
-- [ ] Android Keystore usage
-- [ ] Network security config
-- [ ] ProGuard/R8 configuration
-- [ ] Permission handling
+#### Web Platforms
+- [ ] Secure cookie configuration
+- [ ] Content Security Policy
+- [ ] HTTPS enforcement
+- [ ] XSS prevention measures
 
 ### Environment Configuration
 - [ ] Immutable environment settings
@@ -69,30 +70,8 @@ As a Security Expert, I protect our users' data and privacy as if it were my own
 - [ ] Review license compliance
 - [ ] Update outdated packages
 
-## Security Review Template
-```markdown
-# Security Review: [Feature/Component]
+## Templates
 
-## Data Handling
-- **Sensitive Data**: [List any sensitive data]
-- **Storage Method**: [How it's stored]
-- **Transmission**: [How it's sent]
+Use the **[Security Implementation Template](../templates/SECURITY_IMPLEMENTATION_TEMPLATE.md)** for comprehensive security analysis and implementation planning.
 
-## Authentication
-- **Method**: [Auth approach]
-- **Token Storage**: [Where/how]
-- **Session Management**: [Approach]
-
-## Vulnerabilities Found
-1. [Issue]: [Description] - [Severity]
-2. [Issue]: [Description] - [Severity]
-
-## Recommendations
-1. [Action item]
-2. [Action item]
-
-## Sign-off
-- [ ] All issues addressed
-- [ ] Security standards met
-- [ ] Approved for release
-```
+This template covers data classification, authentication design, threat modeling, implementation guidelines, and verification steps.

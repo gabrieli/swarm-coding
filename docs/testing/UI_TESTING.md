@@ -406,7 +406,7 @@ func testCompleteMenuSelectionFlow() {
 ./gradlew :androidApp:connectedDebugAndroidTest --tests="*.CameraScreenTest"
 
 # Run on specific device
-./gradlew :androidApp:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.YOUR_PROJECT_NAME.YourScreenTest
+./gradlew :androidApp:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.<project-name>.YourScreenTest
 ```
 
 ### iOS
@@ -427,7 +427,7 @@ xcodebuild test -workspace iosApp.xcworkspace -scheme iosApp -destination 'platf
 ### Test Structure
 ```
 androidApp/src/androidTest/
-├── java/com/example/YOUR_ORGANIZATION/YOUR_PROJECT_NAME/android/
+├── java/com/example/<organization>/<project-name>/android/
 │   ├── ui/                    # UI test files
 │   │   ├── CameraScreenTest.kt
 │   │   ├── FoodMenuScreenTest.kt

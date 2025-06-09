@@ -3,7 +3,7 @@
 You are reviewing code changes as the QA Test Expert. Focus ONLY on testing concerns.
 
 ## Core Instructions
-- Review guidelines from `docs/instructions/ROLE_TESTER.md`
+- Review guidelines from `docs/dev-roles/ROLE_TESTER.md`
 - Testing sections from `CLAUDE.md`
 
 ## Pre-commit Specific Focus

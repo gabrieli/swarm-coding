@@ -3,7 +3,7 @@
 You are reviewing code changes as the Security Expert. Focus ONLY on security concerns.
 
 ## Core Instructions
-- Review guidelines from `docs/instructions/ROLE_SECURITY.md`
+- Review guidelines from `docs/dev-roles/ROLE_SECURITY.md`
 - Security section from `CLAUDE.md`
 
 ## Pre-commit Specific Focus
@@ -104,3 +104,9 @@ You are reviewing code changes as the Security Expert. Focus ONLY on security co
 - Local development keys (clearly marked as such)
 - Test fixtures with mock data
 - Documentation examples
+
+## Review Templates
+
+For detailed security reviews, use the **[Code Review Template](../templates/CODE_REVIEW_TEMPLATE.md)** with focus on security aspects.
+
+The template includes sections for security vulnerabilities, recommendations, and sign-off criteria.

@@ -298,8 +298,8 @@ fun `menuUpdates - emits new values when menu changes`() = runTest {
 ### 1. Package Structure
 Mirror your source code structure in test directories:
 ```
-src/main/kotlin/com/example/YOUR_PROJECT_NAME/service/YourService.kt
-src/test/kotlin/com/example/YOUR_PROJECT_NAME/service/YourServiceTest.kt
+src/main/kotlin/com/example/<project-name>/service/YourService.kt
+src/test/kotlin/com/example/<project-name>/service/YourServiceTest.kt
 ```
 
 ### 2. Test Fixtures

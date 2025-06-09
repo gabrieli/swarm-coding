@@ -85,7 +85,7 @@ cd iosApp && xcodebuild test -workspace iosApp.xcworkspace -scheme iosApp -desti
 ./gradlew :androidApp:connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.device=emulator-5554
 
 # Run specific UI test class
-./gradlew :androidApp:connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.YOUR_PROJECT_NAME.YourScreenTest
+./gradlew :androidApp:connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.<project-name>.YourScreenTest
 ```
 
 #### Running Tests from Android Studio
@@ -189,7 +189,7 @@ export SUPABASE_ANON_KEY=your-local-anon-key
 ./gradlew test --exclude "*Slow*"
 
 # Run tests by package
-./gradlew test --tests "com.example.YOUR_PROJECT_NAME.services.*"
+./gradlew test --tests "com.example.<project-name>.services.*"
 
 # Combine filters
 ./gradlew test --tests "*Menu*" --exclude "*Integration*"

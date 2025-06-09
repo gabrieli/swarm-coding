@@ -1,0 +1,168 @@
+{
+  "project": {
+    "name": "<project-name>",
+    "description": "<project-description>",
+    "repository": "https://github.com/<github-username>/<repo-name>",
+    "platforms": ["web", "mobile", "desktop"],
+    "primaryLanguage": "<primary-language>",
+    "version": "1.0.0"
+  },
+  "github": {
+    "organization": "<org-name>",
+    "projectNumber": "<project-number>",
+    "fields": {
+      "status": {
+        "fieldId": "<status-field-id>",
+        "options": {
+          "backlog": "<backlog-status-id>",
+          "pmRefined": "<pm-refined-status-id>",
+          "devReady": "<dev-ready-status-id>",
+          "inProgress": "<in-progress-status-id>",
+          "inReview": "<in-review-status-id>",
+          "done": "<done-status-id>"
+        }
+      },
+      "workItemType": {
+        "fieldId": "<work-item-type-field-id>",
+        "options": {
+          "epic": "<epic-option-id>",
+          "userStory": "<user-story-option-id>",
+          "task": "<task-option-id>",
+          "bug": "<bug-option-id>"
+        }
+      },
+      "priority": {
+        "fieldId": "<priority-field-id>",
+        "options": {
+          "critical": "<critical-option-id>",
+          "high": "<high-option-id>",
+          "medium": "<medium-option-id>",
+          "low": "<low-option-id>"
+        }
+      }
+    }
+  },
+  "workflow": {
+    "statuses": [
+      {
+        "name": "Backlog",
+        "description": "Unrefined items",
+        "role": "Product Manager"
+      },
+      {
+        "name": "PM Refined",
+        "description": "Requirements defined",
+        "role": "Technical Architect"
+      },
+      {
+        "name": "Dev Ready",
+        "description": "Technical design complete",
+        "role": "Developer"
+      },
+      {
+        "name": "In Progress",
+        "description": "Active development",
+        "role": "Developer"
+      },
+      {
+        "name": "In Review",
+        "description": "Code review and testing",
+        "role": "Review Team"
+      },
+      {
+        "name": "Done",
+        "description": "Completed and deployed",
+        "role": "All"
+      }
+    ],
+    "reviewTypes": {
+      "architecture": {
+        "enabled": true,
+        "required": true,
+        "autoTrigger": ["src/**/*.ts", "src/**/*.js"]
+      },
+      "security": {
+        "enabled": true,
+        "required": true,
+        "autoTrigger": ["**/auth/**", "**/api/**"]
+      },
+      "testing": {
+        "enabled": true,
+        "required": true,
+        "autoTrigger": ["**/*.test.*", "**/*.spec.*"]
+      },
+      "documentation": {
+        "enabled": true,
+        "required": false,
+        "autoTrigger": ["**/*.md", "**/docs/**"]
+      },
+      "devops": {
+        "enabled": true,
+        "required": false,
+        "autoTrigger": ["Dockerfile", "**/*.yml", "**/*.yaml"]
+      },
+      "ux": {
+        "enabled": true,
+        "required": false,
+        "autoTrigger": ["**/components/**", "**/pages/**"]
+      }
+    }
+  },
+  "testing": {
+    "frameworks": {
+      "unit": "<unit-test-framework>",
+      "integration": "<integration-test-framework>",
+      "e2e": "<e2e-test-framework>"
+    },
+    "coverage": {
+      "unit": 80,
+      "integration": 70,
+      "overall": 75
+    },
+    "commands": {
+      "unit": "npm test",
+      "integration": "npm run test:integration",
+      "e2e": "npm run test:e2e",
+      "all": "npm run test:all"
+    }
+  },
+  "tools": {
+    "buildSystem": "<build-system>",
+    "packageManager": "<package-manager>",
+    "linter": "<linter>",
+    "formatter": "<formatter>",
+    "ciSystem": "<ci-system>",
+    "containerization": "<docker|podman|none>"
+  },
+  "environments": {
+    "development": {
+      "url": "http://localhost:3000",
+      "branch": "develop"
+    },
+    "staging": {
+      "url": "https://staging.<project-name>.com",
+      "branch": "staging"
+    },
+    "production": {
+      "url": "https://<project-name>.com",
+      "branch": "main"
+    }
+  },
+  "team": {
+    "size": 5,
+    "roles": {
+      "productOwner": "<name>",
+      "techLead": "<name>",
+      "scrumMaster": "<name>"
+    },
+    "communicationChannels": {
+      "slack": "#<project-channel>",
+      "email": "<project>@<company>.com"
+    }
+  },
+  "scripts": {
+    "preCommit": "./scripts/pre-commit.sh",
+    "prCreate": "./scripts/pr-workflow/create-pr.sh",
+    "reviewAggregate": "python scripts/aggregate-reviews.py"
+  }
+}

@@ -116,9 +116,9 @@ As a Developer, I write code that I'm proud to sign my name to. Every line of co
    - Atomic commits (one logical change)
    - Clear commit messages following conventional commits
    - Link to issue numbers when relevant
-   - **CRITICAL: NEVER use --no-verify to bypass pre-commit hooks**
-   - **CRITICAL: If pre-commit fails, FIX THE ISSUES before committing**
-   - **CRITICAL: No broken builds in ANY branch, EVER**
+   - **CRITICAL**: NEVER use --no-verify to bypass pre-commit hooks
+   - **CRITICAL**: If pre-commit fails, FIX THE ISSUES before committing
+   - **CRITICAL**: No broken builds in ANY branch, EVER
 
 3. **Pull Request Process**
    - Create PR when feature is complete AND ALL TESTS PASS
@@ -140,23 +140,14 @@ As a Developer, I write code that I'm proud to sign my name to. Every line of co
 
 ## Platform-Specific Guidelines
 
-### iOS Development
-- Use SwiftUI for UI components
-- Follow iOS Human Interface Guidelines
-- Test on simulator and device
-- Check memory management
+When developing for multiple platforms:
+- Follow platform-specific UI guidelines
+- Test on appropriate simulators/emulators and devices
+- Handle platform-specific lifecycle and configuration changes
+- Keep platform-specific code minimal and well-documented
+- Ensure consistent behavior across platforms
 
-### Android Development
-- Use Jetpack Compose for UI
-- Follow Material Design guidelines
-- Test on different screen sizes
-- Handle configuration changes
-
-### Shared Code
-- Use expect/actual pattern
-- Keep platform-specific code minimal
-- Test on all platforms
-- Document platform differences
+*Note: For specific technology stacks (e.g., Kotlin Multiplatform), see the relevant module documentation in `docs/modules/`*
 
 ## Requirement Implementation Guidelines
 
@@ -229,7 +220,7 @@ When investigating crashes, bugs, or issues, follow this systematic approach:
 - Examine the specific area of code where the issue occurs
 
 ### 2. Log Analysis & Enhancement
-- Check available logs (iOS: SwiftyBeaver, Android: Logcat)
+- Check available logs using platform-specific logging tools
 - If logs are insufficient:
   - Add strategic logging points in suspected code areas
   - Include detailed context (parameters, state, stack traces)
@@ -249,8 +240,8 @@ When investigating crashes, bugs, or issues, follow this systematic approach:
   - Test with real production data (not mocks)
   - Verify expected output
 - If more information needed:
-  - Log at function boundaries: "Added logging to track imageData → base64 conversion"
-  - Be specific: "Testing if processMenuImage receives valid Base64 input"
+  - Log at function boundaries: "Added logging to track data transformations"
+  - Be specific: "Testing if [function] receives valid input"
   - Wait for confirmation
 - Continue isolating the exact transformation that fails
 
@@ -294,83 +285,38 @@ When investigating crashes, bugs, or issues, follow this systematic approach:
 10. If not, return to step 3 with more targeted logging
 ```
 
-### Common iOS Troubleshooting Scenarios
+### Common Platform-Specific Troubleshooting
 
-1. **Camera/Gallery Issues**
-   - Check Info.plist permissions
-   - Verify delegate methods are properly implemented
+1. **Media Access Issues**
+   - Check platform permissions/entitlements
+   - Verify API implementation
    - Log authorization status changes
-   - Test on both simulator and device
+   - Test on both simulators and devices
 
 2. **Crash on Specific Actions**
    - Add logging before/after suspicious operations
-   - Check for nil values or force unwrapping
+   - Check for null/nil handling
    - Verify memory management
-   - Look for threading issues
+   - Look for threading/concurrency issues
 
 3. **UI Not Updating**
-   - Check if updates are on main thread
-   - Verify SwiftUI state changes
-   - Log view lifecycle methods
+   - Check if updates are on UI/main thread
+   - Verify state management
+   - Log lifecycle methods
    - Check data binding
 
 4. **Network Issues**
    - Log request/response details
    - Check error handling
-   - Verify URL construction
+   - Verify endpoint construction
    - Test different network conditions
 
 ### Known Issues and Workarounds
 
-#### KotlinByteArray Conversion Crash (iOS)
+Document any persistent issues and their workarounds here. Include:
+- Clear description of the issue
+- Steps to reproduce
+- Current workaround
+- Long-term solution plans
 
-**Issue**: App crashes when converting large image data (368KB+) from Swift Data to KotlinByteArray in KMP projects. Small data conversions work fine, but actual image data causes immediate crash.
-
-**Symptoms**:
-- Crash occurs after "Creating KotlinByteArray..." log
-- No exception caught in Swift try/catch blocks
-- Works fine with small test data (10 bytes)
-- Fails with actual image data
-
-**Investigation Findings**:
-- Direct byte-by-byte copying fails
-- Chunked processing approach fails
-- Autoreleasepool memory management doesn't help
-- NSException handling doesn't catch the error
-- Issue appears to be deep in Kotlin/Native interop layer
-
-**Current Workaround**:
-```swift
-// Convert image to base64 for future use
-let base64String = imageData.base64EncodedString()
-
-// Create minimal test data for KotlinByteArray
-let testData = Data("test".utf8)
-let byteArray = KotlinByteArray(size: Int32(testData.count))
-for i in 0..<testData.count {
-    byteArray.set(index: Int32(i), value: Int8(bitPattern: testData[i]))
-}
-
-// Use mock data for processing
-let mockItems = createMockFoodItems()
-onProcessingComplete(mockItems)
-```
-
-**Future Solutions to Explore**:
-1. Update Kotlin Multiplatform version
-2. Use base64 string passing instead of byte arrays
-3. Implement server-side image processing
-4. Research Kotlin/Native memory interop issues
-5. Try alternative KMP data passing methods
-
-**Files Affected**:
-- `/iosApp/iosApp/CameraProcessingView.swift`
-- `/iosApp/iosApp/Extensions/DataExtensions.swift`
-
-**Status**: Workaround implemented, app functional with mock data
-
-**Development Tips**:
-- Always clean build when testing KMP interop changes
-- Test on real device if possible (simulator may behave differently)
-- Add extensive logging around data conversions
-- Consider data size limits when passing between Swift/Kotlin
+*Note: For technology-specific issues (e.g., Kotlin Multiplatform interop), document in the relevant module under `docs/modules/`*

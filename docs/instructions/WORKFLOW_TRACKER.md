@@ -55,46 +55,12 @@ Example:
 
 ### 6. Epic/Sprint Tracking
 
-#### Sprint File Template
-Create `SPRINT_[NUMBER].md` for each sprint:
-```markdown
-# Sprint [Number]
+For tracking epics and sprints, use these templates:
 
-## Sprint Goal
-[What we aim to complete]
+- **[Sprint Tracking Template](../templates/SPRINT_TRACKING_TEMPLATE.md)** - Create `SPRINT_[NUMBER].md` files using this comprehensive template
+- **[Epic Template](../templates/EPIC_TEMPLATE.md)** - Create `EPIC_[NAME].md` files for detailed epic tracking
 
-## Committed Stories
-1. [Story ID] - [Description] - [Points]
-2. [Story ID] - [Description] - [Points]
-
-## Daily Progress
-### Day 1 - [Date]
-- Completed: [List]
-- In Progress: [List]
-- Blockers: [List]
-```
-
-#### Epic File Template
-Create `EPIC_[NAME].md` for each epic:
-```markdown
-# Epic: [Name]
-
-## Status: [Active/Complete/On Hold]
-
-## User Stories
-1. [x] Story 1 - Complete
-2. [ ] Story 2 - In Progress
-3. [ ] Story 3 - Pending
-
-## Technical Tasks
-1. [x] Task 1 - Complete
-2. [ ] Task 2 - In Progress
-
-## Current Phase
-Role: [Current Role]
-Status: [Status]
-Next: [What's next]
-```
+These templates provide structured formats for tracking progress, blockers, and team activities.
 
 ### 7. Quick Status Check Process
 1. Read PROJECT_STATE.md for high-level status

@@ -29,7 +29,7 @@ gh issue edit <number> --add-project "Project Name"
 ```bash
 gh project list --owner <username>
 # Output: NUMBER  TITLE       STATE   ID
-# Example: 1       Your Project  open    YOUR_PROJECT_ID
+# Example: 1       Your Project  open    <project-id>
 ```
 
 ### 5. Get Project Field Information
@@ -96,20 +96,20 @@ gh api graphql -F query=@update_status.graphql \
 ## Your Project Specific IDs
 
 ### Project Information
-- **Project Name**: YOUR_PROJECT_NAME
+- **Project Name**: <project-name>
 - **Project Number**: 1
-- **Project ID**: YOUR_PROJECT_ID
-- **Owner**: YOUR_GITHUB_USERNAME
+- **Project ID**: <project-id>
+- **Owner**: <github-username>
 
 ### Status Field
-- **Field ID**: YOUR_STATUS_FIELD_ID
+- **Field ID**: <status-field-id>
 - **Status Options**:
-  - Backlog: `YOUR_BACKLOG_STATUS_ID`
-  - PM Refined: `YOUR_PM_REFINED_STATUS_ID`
-  - Dev Ready: `YOUR_DEV_READY_STATUS_ID`
-  - In progress: `YOUR_IN_PROGRESS_STATUS_ID`
-  - In review: `YOUR_IN_REVIEW_STATUS_ID`
-  - Done: `YOUR_DONE_STATUS_ID`
+  - Backlog: `<backlog-status-id>`
+  - PM Refined: `<pm-refined-status-id>`
+  - Dev Ready: `<dev-ready-status-id>`
+  - In progress: `<in-progress-status-id>`
+  - In review: `<in-review-status-id>`
+  - Done: `<done-status-id>`
 
 ## Common Workflow: Create Issue and Set to Dev Ready
 
@@ -119,21 +119,21 @@ ISSUE_URL=$(gh issue create --title "Title" --body "Body" --assignee @me)
 ISSUE_NUMBER=$(echo $ISSUE_URL | grep -o '[0-9]*$')
 
 # 2. Add to Your Project
-gh issue edit $ISSUE_NUMBER --add-project "YOUR_PROJECT_NAME"
+gh issue edit $ISSUE_NUMBER --add-project "<project-name>"
 
 # 3. Get the project item ID
-ITEM_ID=$(gh project item-list 1 --owner YOUR_GITHUB_USERNAME --format json | jq -r '.items[] | select(.content.number=='$ISSUE_NUMBER') | .id')
+ITEM_ID=$(gh project item-list 1 --owner <github-username> --format json | jq -r '.items[] | select(.content.number=='$ISSUE_NUMBER') | .id')
 
 # 4. Update status to Dev Ready
 cat > update_to_dev_ready.graphql << 'EOF'
 mutation {
   updateProjectV2ItemFieldValue(
     input: {
-      projectId: "YOUR_PROJECT_ID"
+      projectId: "<project-id>"
       itemId: "REPLACE_ITEM_ID"
-      fieldId: "YOUR_STATUS_FIELD_ID"
+      fieldId: "<status-field-id>"
       value: {
-        singleSelectOptionId: "YOUR_DEV_READY_STATUS_ID"
+        singleSelectOptionId: "<dev-ready-status-id>"
       }
     }
   ) {
@@ -177,7 +177,7 @@ Add these to your shell profile:
 alias gh-create-dev-ready='function _create() {
   ISSUE_URL=$(gh issue create --title "$1" --body "$2" --assignee @me)
   ISSUE_NUMBER=$(echo $ISSUE_URL | grep -o "[0-9]*$")
-  gh issue edit $ISSUE_NUMBER --add-project "YOUR_PROJECT_NAME"
+  gh issue edit $ISSUE_NUMBER --add-project "<project-name>"
   # ... (add status update logic)
 }; _create'
 ```

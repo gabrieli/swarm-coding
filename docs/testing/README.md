@@ -4,12 +4,14 @@ Welcome to the project testing documentation. This guide provides comprehensive 
 
 ## Overview
 
-Your project uses a multi-platform architecture with Kotlin Multiplatform Mobile (KMM) for shared code and platform-specific implementations for iOS and Android. Our testing strategy reflects this architecture with:
+This testing strategy supports multi-platform architectures with:
 
-- **Shared Tests**: Common business logic tests that run on all platforms
-- **Platform-Specific Tests**: iOS and Android specific implementations
-- **UI Tests**: Platform-specific UI automation tests
+- **Core Tests**: Business logic tests that verify core functionality
+- **Platform-Specific Tests**: Platform-specific implementation tests
+- **UI Tests**: Automated UI testing for each platform
 - **Integration Tests**: End-to-end testing with external services
+
+*Note: For specific technology stacks (e.g., Kotlin Multiplatform), see relevant guides in `docs/modules/`*
 
 ## Documentation Structure
 
@@ -25,54 +27,41 @@ Your project uses a multi-platform architecture with Kotlin Multiplatform Mobile
 
 ### Running Tests Locally
 
-#### Android Tests
 ```bash
-# Run all Android unit tests
-./gradlew :androidApp:test
+# Example commands - adapt to your build system and platform
 
-# Run Android UI tests
-./androidApp/run_android_tests.sh
+# Run all tests
+./run-tests.sh --all
 
-# Run specific test class
-./gradlew :androidApp:testDebugUnitTest --tests "*.CameraScreenTest"
+# Run platform-specific tests
+./run-tests.sh --platform=<platform-name>
+
+# Run specific test suite
+./run-tests.sh --suite=unit
+./run-tests.sh --suite=integration
+./run-tests.sh --suite=ui
 ```
 
-#### iOS Tests
-```bash
-# Run all iOS tests
-cd iosApp && xcodebuild test -workspace iosApp.xcworkspace -scheme iosApp -destination 'platform=iOS Simulator,name=iPhone 15'
-
-# Run specific test file
-xcodebuild test -workspace iosApp.xcworkspace -scheme iosApp -destination 'platform=iOS Simulator,name=iPhone 15' -only-testing:iosAppTests/CameraIntegrationTests
-```
-
-#### Shared Tests
-```bash
-# Run all shared tests
-./gradlew :shared:allTests
-
-# Run common tests only
-./gradlew :shared:commonTest
-```
+*See platform-specific documentation for detailed test commands.*
 
 ## Test Organization
 
 ### Directory Structure
+
+A typical multi-platform project structure:
 ```
 your-project/
-├── shared/
-│   ├── src/
-│   │   ├── commonTest/        # Shared test code
-│   │   ├── androidUnitTest/   # Android-specific unit tests
-│   │   └── iosTest/           # iOS-specific unit tests
-├── androidApp/
-│   ├── src/
-│   │   ├── test/              # Android unit tests
-│   │   └── androidTest/       # Android UI tests
-└── iosApp/
-    ├── iosAppTests/           # iOS unit tests
-    └── iosAppUITests/         # iOS UI tests
+├── core/                      # Core business logic
+│   └── tests/                 # Core tests
+├── platform-a/                # Platform A implementation
+│   ├── tests/                 # Platform A unit tests
+│   └── ui-tests/              # Platform A UI tests
+└── platform-b/                # Platform B implementation
+    ├── tests/                 # Platform B unit tests
+    └── ui-tests/              # Platform B UI tests
 ```
+
+*Adapt this structure to your specific project needs and technology stack.*
 
 ## Testing Principles
 
@@ -90,31 +79,17 @@ Ensure equivalent test coverage across platforms:
 
 ### 3. Test Naming Conventions
 
-#### Kotlin Tests
-```kotlin
-@Test
-fun `function name - expected behavior when condition`() {
-    // Test implementation
-}
+Use descriptive test names that clearly indicate:
+- What is being tested
+- Under what conditions
+- What the expected outcome is
 
-// Example:
-@Test
-fun `processMenuImage - returns error when base64 string is empty`() {
-    // ...
-}
-```
+Example patterns:
+- `testFunctionName_WhenCondition_ExpectedBehavior`
+- `function_shouldBehavior_whenCondition`
+- `given_when_then` format
 
-#### Swift Tests
-```swift
-func testFunctionName_WhenCondition_ExpectedBehavior() {
-    // Test implementation
-}
-
-// Example:
-func testProcessImage_WhenImageIsValid_ReturnsProcessedData() {
-    // ...
-}
-```
+Consult your language/framework conventions for specific naming guidelines.
 
 ### 4. Test Independence
 - Each test should be independent and not rely on other tests

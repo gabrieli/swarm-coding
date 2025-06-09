@@ -33,20 +33,24 @@ node --version  # Should be 18+
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME.git
-cd YOUR_REPO_NAME
+git clone https://github.com/<github-username>/<repo-name>.git
+cd <repo-name>
 ```
 
-### 2. Install Kotlin Multiplatform
+### 2. Install Development Tools
 
 ```bash
-# Install SDKMAN (if not already installed)
-curl -s "https://get.sdkman.io" | bash
-source "$HOME/.sdkman/bin/sdkman-init.sh"
+# Install required development tools for your platform
+# Examples:
+# - Language-specific SDKs
+# - Build tools (Gradle, Maven, npm, etc.)
+# - Platform-specific tools
 
-# Install Kotlin
-sdk install kotlin
+# Verify installations
+./verify-tools.sh
 ```
+
+*For specific technology stacks (e.g., Kotlin Multiplatform), see `docs/modules/`*
 
 ### 3. Android Setup
 
@@ -114,42 +118,38 @@ cd ..
 4. Select your development team
 5. Update bundle identifier if needed
 
-### 5. Supabase Local Setup
+### 5. External Services Setup
 
-#### Install Supabase CLI
+#### Install Service Dependencies
 ```bash
-# macOS with Homebrew
-brew install supabase/tap/supabase
+# Install required CLI tools for external services
+# Examples:
+# - Database clients
+# - API testing tools
+# - Mock servers
 
-# Or with npm
-npm install -g supabase
-
-# Verify installation
-supabase --version
+# Verify installations
+./verify-services.sh
 ```
 
-#### Start Local Supabase
+#### Start Local Services
 ```bash
-# From project root
-cd supabase
-supabase start
+# Start any required local services
+./start-local-services.sh
 
-# This will output connection details:
-# API URL: http://localhost:54321
-# DB URL: postgresql://postgres:postgres@localhost:54322/postgres
-# Studio URL: http://localhost:54323
-# Inbucket URL: http://localhost:54324
-# anon key: eyJ...
-# service_role key: eyJ...
+# This will output connection details for each service
 ```
 
 #### Configure Environment
 Create `.env.local` file in project root:
 ```bash
-SUPABASE_URL=http://localhost:54321
-SUPABASE_ANON_KEY=your-anon-key-from-output
-SUPABASE_SERVICE_KEY=your-service-key-from-output
+# Add your service configurations
+SERVICE_URL=http://localhost:port
+SERVICE_KEY=your-service-key
+# Add other required environment variables
 ```
+
+*Document specific service configurations in your project README.*
 
 ## IDE Configuration
 
@@ -165,9 +165,10 @@ SUPABASE_SERVICE_KEY=your-service-key-from-output
    - Gradle JDK: 17 or higher
    - Use Gradle from: gradle-wrapper.properties
 
-3. **Enable KMM Plugin**
-   - Plugins → Marketplace → Search "Kotlin Multiplatform Mobile"
-   - Install and restart
+3. **Enable Required Plugins**
+   - Plugins → Marketplace → Search for required plugins
+   - Install plugins specific to your technology stack
+   - Restart IDE after installation
 
 4. **Configure Test Runner**
    - Run → Edit Configurations
@@ -214,13 +215,13 @@ SUPABASE_SERVICE_KEY=your-service-key-from-output
 
 ### Verify Setup with Quick Tests
 
-#### 1. Run Shared Tests
+#### 1. Run Core Tests
 ```bash
-./gradlew :shared:allTests
+# Run your project's core test suite
+./run-tests.sh --core
 
 # Expected output:
-# BUILD SUCCESSFUL
-# All tests passed
+# Tests passed successfully
 ```
 
 #### 2. Run Android Unit Tests
@@ -244,10 +245,10 @@ xcodebuild test \
 # Product → Test (⌘U)
 ```
 
-#### 4. Verify Supabase Connection
+#### 4. Verify External Service Connections
 ```bash
-# Run integration test
-./gradlew :shared:commonTest --tests "*SupabaseIntegrationTest"
+# Run integration tests to verify service connections
+./run-integration-tests.sh
 ```
 
 ## Troubleshooting Setup Issues
@@ -291,25 +292,25 @@ xcrun simctl list devices
 xcrun simctl create "iPhone 15" "iPhone 15" iOS17.0
 ```
 
-### Common Supabase Issues
+### Common Service Issues
 
-**Issue**: Supabase won't start
+**Issue**: Local services won't start
 ```bash
-# Stop all containers
-supabase stop
+# Stop all services
+./stop-services.sh
 
 # Clean and restart
-docker system prune -a
-supabase start
+./clean-services.sh
+./start-services.sh
 ```
 
 **Issue**: Connection refused
 ```bash
 # Check if services are running
-docker ps
+./check-services.sh
 
-# Check logs
-supabase logs
+# Check service logs
+./service-logs.sh
 ```
 
 ## Environment Validation
@@ -343,25 +344,20 @@ else
     echo "⚠️  Xcode not found (iOS development unavailable)"
 fi
 
-# Check Kotlin
-if command -v kotlin &> /dev/null; then
-    echo "✅ Kotlin installed"
-else
-    echo "❌ Kotlin not installed"
-fi
+# Check project-specific tools
+# Add checks for your required tools here
+# Example:
+# if command -v your-tool &> /dev/null; then
+#     echo "✅ Your tool installed"
+# else
+#     echo "❌ Your tool not installed"
+# fi
 
-# Check Supabase
-if command -v supabase &> /dev/null; then
-    echo "✅ Supabase CLI installed"
-else
-    echo "❌ Supabase CLI not installed"
-fi
-
-# Check Docker (for Supabase)
-if docker ps &> /dev/null; then
+# Check Docker (if using containerized services)
+if command -v docker &> /dev/null && docker ps &> /dev/null; then
     echo "✅ Docker is running"
 else
-    echo "❌ Docker not running or not installed"
+    echo "⚠️  Docker not running or not installed (if required)"
 fi
 
 echo "🏁 Validation complete"
